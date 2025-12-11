@@ -1,8 +1,8 @@
-package GameSetup.Pieces;
+package Game.Pieces;
 
-import GameSetup.Pieces.Features.Color;
-import GameSetup.Pieces.Features.PieceType;
-import GameSetup.Position;
+import Game.Pieces.Features.Color;
+import Game.Pieces.Features.PieceType;
+import Game.Position;
 
 import java.util.List;
 

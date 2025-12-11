@@ -1,4 +1,4 @@
-package GameSetup.Pieces.Features;
+package Game.Pieces.Features;
 
 public enum PieceType {
     PAWN,

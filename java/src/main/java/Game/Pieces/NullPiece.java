@@ -1,7 +1,8 @@
-package GameSetup.Pieces;
+package Game.Pieces;
 
-import GameSetup.Pieces.Features.Color;
-import GameSetup.Position;
+import Game.Pieces.Features.Color;
+import Game.Pieces.Features.PieceType;
+import Game.Position;
 
 import java.util.List;
 
@@ -17,5 +18,7 @@ public class NullPiece implements Piece {
     public void setPosition(Position position) {this.position = position;}
     public List<Position> getValidMoves() {throw new NullPointerException("Cannot get valid moves of null piece at " + position);}
     public boolean exists() {return false;}
+    public PieceType getType() {return PieceType.NULLPIECE;}
+
 }
 

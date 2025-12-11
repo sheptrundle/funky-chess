@@ -1,8 +1,8 @@
-package GameSetup.Pieces;
-import GameSetup.ChessBoard;
-import GameSetup.Pieces.Features.Color;
-import GameSetup.Pieces.Features.PieceType;
-import GameSetup.Position;
+package Game.Pieces;
+import Game.ChessBoard;
+import Game.Pieces.Features.Color;
+import Game.Pieces.Features.PieceType;
+import Game.Position;
 
 import java.util.ArrayList;
 import java.util.List;

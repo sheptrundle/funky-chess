@@ -1,6 +1,4 @@
-package GameSetup;
-
-import java.util.Map;
+package Game;
 
 public class Position {
     private int row;

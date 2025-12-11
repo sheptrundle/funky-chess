@@ -1,6 +1,6 @@
-package GameSetup;
-import GameSetup.Pieces.NullPiece;
-import GameSetup.Pieces.Piece;
+package Game;
+import Game.Pieces.NullPiece;
+import Game.Pieces.Piece;
 
 public class ChessBoard {
     public Piece[][] board;
