@@ -23,12 +23,12 @@ test {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(22)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
 javafx {
-    version = "23.0.1"
+    version = "21.0.9"
     modules = [ 'javafx.controls', 'javafx.graphics', 'javafx.fxml']
 }
 
