@@ -1,5 +1,7 @@
 package Controllers;
 
+import Game.ChessBoard;
+import Game.Pieces.Piece;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -10,6 +12,11 @@ public class ChessGameController {
     private StackPane[][] squares = new StackPane[8][8];
 
     public void initialize() {createBoard();}
+
+    public void placePiece(Piece piece, int row, int col) {
+        StackPane square = squares[row][col];
+        square.getChildren().add(piece.getNode());
+    }
 
     public void createBoard() {
         // Build the board
@@ -30,6 +37,8 @@ public class ChessGameController {
         }
 
         // Place all the pieces
+        // Todo: make it so the squares pull from chess board initialized state here and memorize it
+
 
 
     }

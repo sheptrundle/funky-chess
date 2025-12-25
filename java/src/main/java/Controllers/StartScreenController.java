@@ -22,6 +22,7 @@ public class StartScreenController {
             FXMLLoader loader = new FXMLLoader(StartScreenController.class.getResource("/FX/chess-board.fxml"));
             Parent root = loader.load();
             ChessGameController controller = loader.getController();
+            controller.initialize();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Weird Chess");
