@@ -1,4 +1,4 @@
-package Game.Pieces.Features;
+package Game.Features;
 
 public enum Color {
     WHITE,

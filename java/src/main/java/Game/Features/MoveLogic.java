@@ -1,8 +1,6 @@
-package Game.Pieces.Features;
+package Game.Features;
 
-import Game.ChessBoard;
 import Game.Pieces.Piece;
-import Game.Position;
 
 public class MoveLogic {
 

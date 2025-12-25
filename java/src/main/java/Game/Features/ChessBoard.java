@@ -1,6 +1,5 @@
-package Game;
+package Game.Features;
 import Game.Pieces.*;
-import Game.Pieces.Features.Color;
 
 public class ChessBoard {
     public Piece[][] board;
@@ -17,6 +16,17 @@ public class ChessBoard {
     // Sets a piece at position
     public void setPieceAt(Position position, Piece piece) {
         board[position.getRow()][position.getColumn()] = piece;
+    }
+
+    public ChessBoard flippedCopy() {
+        ChessBoard flipped = new ChessBoard();
+        int flippedRow = 0;
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                flipped.board[flippedRow][col] = board[7 - row][col];
+            }
+        }
+        return flipped;
     }
 
     // Initialize a new piece and place it in a position

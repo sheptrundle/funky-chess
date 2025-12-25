@@ -1,8 +1,8 @@
 package Controllers;
 
-import Game.ChessBoard;
+import Game.Features.ChessBoard;
 import Game.Pieces.Piece;
-import Game.Position;
+import Game.Features.Position;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;

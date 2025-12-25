@@ -1,4 +1,4 @@
-package Game;
+package Game.Features;
 
 public class Position {
     private int row;
