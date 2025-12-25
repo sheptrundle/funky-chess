@@ -2,6 +2,7 @@ package Controllers;
 
 import Game.ChessBoard;
 import Game.Pieces.Piece;
+import Game.Position;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -10,16 +11,26 @@ public class ChessGameController {
     @FXML
     private GridPane boardGrid;
     private StackPane[][] squares = new StackPane[8][8];
+    private ChessBoard chessBoard;
 
-    public void initialize() {createBoard();}
+    public void initialize() {
+        setChessBoard(new ChessBoard());
+    }
+
+    public void setChessBoard(ChessBoard board) {
+        this.chessBoard = board;
+        createGrid();
+        chessBoard.initialize();
+        updateUI();
+    }
 
     public void placePiece(Piece piece, int row, int col) {
         StackPane square = squares[row][col];
         square.getChildren().add(piece.getNode());
     }
 
-    public void createBoard() {
-        // Build the board
+    public void createGrid() {
+        // Build the grid
         boardGrid.getChildren().clear();
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
@@ -35,11 +46,17 @@ public class ChessGameController {
                 boardGrid.add(square, col, row);
             }
         }
+    }
 
-        // Place all the pieces
-        // Todo: make it so the squares pull from chess board initialized state here and memorize it
+    public void updateUI() {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                StackPane square = squares[row][col];
+                square.getChildren().clear();
 
-
-
+                Piece piece = chessBoard.getPieceAt(new Position(row, col));
+                square.getChildren().add(piece.getNode());
+            }
+        }
     }
 }

@@ -47,18 +47,18 @@ public class ChessBoard {
     // Set up the board in standard position
     public void initialize() {
         // Pawns
-        for (int col = 1; col < 8; col++) {
+        for (int col = 0; col < 8; col++) {
             createAndPlace(Color.WHITE, "pawn", 1, col);
             createAndPlace(Color.BLACK, "pawn", 6, col);
         }
 
         // Kings
         createAndPlace(Color.WHITE, "king", 0, 4);
-        createAndPlace(Color.BLACK, "king", 8, 4);
+        createAndPlace(Color.BLACK, "king", 7, 4);
 
         // Queens *NULL RN
-        createAndPlace(Color.BLACK, "queen", 0, 3);
-        createAndPlace(Color.BLACK, "queen", 8, 3);
+        createAndPlace(Color.BLACK, "null", 0, 3);
+        createAndPlace(Color.BLACK, "null", 7, 3);
 
         // Knights
         createAndPlace(Color.WHITE, "knight", 0, 1);
@@ -80,7 +80,7 @@ public class ChessBoard {
 
         // Null Pieces in Middle
         for (int row = 2; row < 6; row++) {
-            for (int col = 0; col < 7; col++) {
+            for (int col = 0; col < 8; col++) {
                 createAndPlace(Color.WHITE,"null", row, col);
             }
         }
