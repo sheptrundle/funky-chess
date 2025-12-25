@@ -1,5 +1,7 @@
 package Game;
+import Game.Pieces.Features.Color;
 import Game.Pieces.NullPiece;
+import Game.Pieces.Pawn;
 import Game.Pieces.Piece;
 
 public class ChessBoard {
@@ -21,7 +23,16 @@ public class ChessBoard {
 
     // Set up the board in standard position
     public void initialize() {
-        // implement this
+        for (int col = 1; col < 8; col++) {
+            // Place white pawns
+            Position whitePawnLoc = new Position(1, col);
+            Piece whitePawn = new Pawn(whitePawnLoc, this, Color.WHITE);
+            setPieceAt(whitePawnLoc, whitePawn);
+            // Place black pawns
+            Position blackPawnLoc = new Position(7, col);
+            Piece blackPawn = new Pawn(blackPawnLoc, this, Color.BLACK);
+            setPieceAt(blackPawnLoc, blackPawn);
+        }
     }
 
     // This will have to get wayyyy more complicated I assume

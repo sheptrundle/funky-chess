@@ -18,6 +18,7 @@ public class StartScreenController {
     @FXML
     public void handleStartGame(ActionEvent event) {
         try {
+            // Set scene visually
             FXMLLoader loader = new FXMLLoader(StartScreenController.class.getResource("/FX/chess-board.fxml"));
             Parent root = loader.load();
             ChessGameController controller = loader.getController();

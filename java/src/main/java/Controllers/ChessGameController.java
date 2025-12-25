@@ -12,8 +12,8 @@ public class ChessGameController {
     public void initialize() {createBoard();}
 
     public void createBoard() {
+        // Build the board
         boardGrid.getChildren().clear();
-
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
 
@@ -28,5 +28,8 @@ public class ChessGameController {
                 boardGrid.add(square, col, row);
             }
         }
+
+        // Place all the pieces
+
     }
 }
