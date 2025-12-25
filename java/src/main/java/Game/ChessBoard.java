@@ -48,23 +48,50 @@ public class ChessBoard {
     public void initialize() {
         // Pawns
         for (int col = 1; col < 8; col++) {
-            // Place white pawns
-            Position whitePawnLoc = new Position(1, col);
-            Piece whitePawn = new Pawn(whitePawnLoc, this, Color.WHITE);
-            setPieceAt(whitePawnLoc, whitePawn);
-            // Place black pawns
-            Position blackPawnLoc = new Position(7, col);
-            Piece blackPawn = new Pawn(blackPawnLoc, this, Color.BLACK);
-            setPieceAt(blackPawnLoc, blackPawn);
+            createAndPlace(Color.WHITE, "pawn", 1, col);
+            createAndPlace(Color.BLACK, "pawn", 6, col);
         }
+
         // Kings
+        createAndPlace(Color.WHITE, "king", 0, 4);
+        createAndPlace(Color.BLACK, "king", 8, 4);
 
+        // Queens *NULL RN
+        createAndPlace(Color.BLACK, "queen", 0, 3);
+        createAndPlace(Color.BLACK, "queen", 8, 3);
 
+        // Knights
+        createAndPlace(Color.WHITE, "knight", 0, 1);
+        createAndPlace(Color.WHITE, "knight", 0, 6);
+        createAndPlace(Color.BLACK, "knight", 7, 1);
+        createAndPlace(Color.BLACK, "knight", 7, 6);
+
+        // Rooks
+        createAndPlace(Color.WHITE, "rook", 0, 0);
+        createAndPlace(Color.WHITE, "rook", 0, 7);
+        createAndPlace(Color.BLACK, "rook", 7, 0);
+        createAndPlace(Color.BLACK, "rook", 7, 7);
+
+        // Bishops *NULL RN
+        createAndPlace(Color.WHITE, "null", 0, 2);
+        createAndPlace(Color.BLACK, "null", 0, 5);
+        createAndPlace(Color.WHITE, "null", 7, 2);
+        createAndPlace(Color.BLACK, "null", 7, 5);
+
+        // Null Pieces in Middle
+        for (int row = 2; row < 6; row++) {
+            for (int col = 0; col < 7; col++) {
+                createAndPlace(Color.WHITE,"null", row, col);
+            }
+        }
     }
 
     // This will have to get wayyyy more complicated I assume?
     public void movePiece(Position from, Position to) {
         Piece movingPiece = getPieceAt(from);
+        if (!movingPiece.exists()) {
+            throw new IllegalArgumentException("Cannot move NullPiece from " + from + " to " + to);
+        }
         movingPiece.setPosition(to);
         setPieceAt(to, movingPiece);
         setPieceAt(from, new NullPiece(from));
