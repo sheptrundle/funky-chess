@@ -39,8 +39,14 @@ public class ChessBoard {
         else if (pieceName.equals("rook")) {
             piece = new Rook(pos, this, color);
         }
+        else if (pieceName.equals("bishop")) {
+            piece = new Bishop(pos, this, color);
+        }
         else if (pieceName.equals("knight")) {
             piece = new Knight(pos, this, color);
+        }
+        else if (pieceName.equals("queen")) {
+            piece = new Queen(pos, this, color);
         }
         else if (pieceName.equals("king")) {
             piece = new King(pos, this, color);
