@@ -1,10 +1,6 @@
 package Game.Pieces;
 
-import Game.Features.ChessBoard;
-import Game.Features.Color;
-import Game.Features.MoveLogic;
-import Game.Features.PieceType;
-import Game.Features.Position;
+import Game.Features.*;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,13 +8,13 @@ import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook implements Piece {
+public class Bishop implements Piece {
     Position position;
     ChessBoard board;
     Color color;
     private ImageView imageView;
 
-    public Rook(Position position, ChessBoard board, Color color) {
+    public Bishop(Position position, ChessBoard board, Color color) {
         this.position = position;
         this.board = board;
         this.color = color;
@@ -39,35 +35,29 @@ public class Rook implements Piece {
         return (color == Color.WHITE) ? "white" : "black";
     }
     public boolean exists() {return true;}
-    public PieceType getType() {return PieceType.ROOK;}
+    public PieceType getType() {return PieceType.BISHOP;}
     public Node getNode() {return imageView;}
 
     public List<Position> getValidMoves() {
-        int[] dxy = {1, -1};
+        int[] dy = {1, -1};
+        int[] dx = {1, -1};
         List<Position> validMoves = new ArrayList<>();
         MoveLogic moveLogic = new MoveLogic();
 
-        // Expand left/right
-        for (int dx : dxy) {
-            int col = position.getColumn() + dx;
-            int row = position.getRow();
-            while (moveLogic.isValidMove(this, board, new Position(row, col))) {
-                validMoves.add(new Position(row, col));
-                col += dx;
+        // Expand diagonals
+        for (int y : dy) {
+            for (int x : dx) {
+                int row = position.getRow() + y;
+                int col = position.getColumn() + x;
+
+                while (moveLogic.isValidMove(this, board, new Position(row, col))) {
+                    validMoves.add(new Position(row, col));
+                    row += y;
+                    col += x;
+                }
             }
         }
-
-        // Expand up/down
-        for (int dy : dxy) {
-            int row = position.getRow() + dy;
-            int col = position.getColumn();
-            while (moveLogic.isValidMove(this, board, new Position(row, col))) {
-                validMoves.add(new Position(row, col));
-                row += dy;
-            }
-        }
-
         return validMoves;
     }
-
 }
+
