@@ -66,9 +66,9 @@ public class ChessBoard {
         createAndPlace(Color.WHITE, "king", 0, 4);
         createAndPlace(Color.BLACK, "king", 7, 4);
 
-        // Queens *NULL RN
-        createAndPlace(Color.BLACK, "null", 0, 3);
-        createAndPlace(Color.BLACK, "null", 7, 3);
+        // Queens
+        createAndPlace(Color.BLACK, "queen", 0, 3);
+        createAndPlace(Color.BLACK, "queen", 7, 3);
 
         // Knights
         createAndPlace(Color.WHITE, "knight", 0, 1);
@@ -82,11 +82,11 @@ public class ChessBoard {
         createAndPlace(Color.BLACK, "rook", 7, 0);
         createAndPlace(Color.BLACK, "rook", 7, 7);
 
-        // Bishops *NULL RN
-        createAndPlace(Color.WHITE, "null", 0, 2);
-        createAndPlace(Color.BLACK, "null", 0, 5);
-        createAndPlace(Color.WHITE, "null", 7, 2);
-        createAndPlace(Color.BLACK, "null", 7, 5);
+        // Bishops
+        createAndPlace(Color.WHITE, "bishop", 0, 2);
+        createAndPlace(Color.BLACK, "bishop", 0, 5);
+        createAndPlace(Color.WHITE, "bishop", 7, 2);
+        createAndPlace(Color.BLACK, "bishop", 7, 5);
 
         // Null Pieces in Middle
         for (int row = 2; row < 6; row++) {
