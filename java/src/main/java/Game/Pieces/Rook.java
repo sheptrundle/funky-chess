@@ -25,7 +25,7 @@ public class Rook implements Piece {
 
         // Set up the image for specific piece
         this.imageView = new ImageView(
-                new Image("/images/" + color + "_rook.png")
+                new Image("/images/" + getColorAsString() + "_rook.png")
         );
         this.imageView.setFitWidth(80);
         this.imageView.setFitHeight(80);
@@ -35,6 +35,9 @@ public class Rook implements Piece {
     public Position getPosition() {return position;}
     public void setPosition(Position position) {this.position = position;}
     public Color getColor() {return color;}
+    public String getColorAsString() {
+        return (color == Color.WHITE) ? "white" : "black";
+    }
     public boolean exists() {return true;}
     public PieceType getType() {return PieceType.ROOK;}
     public Node getNode() {return imageView;}

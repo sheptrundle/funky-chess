@@ -23,7 +23,7 @@ public class Knight implements Piece {
         this.color = color;
         // Set up the image for specific piece
         this.imageView = new ImageView(
-                new Image("/images/" + color + "_knight.png")
+                new Image("/images/" + getColorAsString() + "_knight.png")
         );
         this.imageView.setFitWidth(80);
         this.imageView.setFitHeight(80);
@@ -33,6 +33,9 @@ public class Knight implements Piece {
     public Position getPosition() {return position;}
     public void setPosition(Position position) {this.position = position;}
     public Color getColor() {return color;}
+    public String getColorAsString() {
+        return (color == Color.WHITE) ? "white" : "black";
+    }
     public boolean exists() {return true;}
     public PieceType getType() {return PieceType.KNIGHT;}
     public Node getNode() {return imageView;}

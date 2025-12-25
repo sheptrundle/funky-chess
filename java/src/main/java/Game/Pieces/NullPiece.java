@@ -16,6 +16,7 @@ public class NullPiece implements Piece {
     }
 
     public Color getColor() {throw new NullPointerException("Cannot get color of null piece at " + position);}
+    public String getColorAsString() {throw new NullPointerException("Cannot get color (as string) of null piece at " + position);}
     public Position getPosition() {return position;}
     public void setPosition(Position position) {this.position = position;}
     public List<Position> getValidMoves() {throw new NullPointerException("Cannot get valid moves of null piece at " + position);}

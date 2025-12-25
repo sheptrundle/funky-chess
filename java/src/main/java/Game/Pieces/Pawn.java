@@ -26,7 +26,7 @@ public class Pawn implements Piece {
 
         // Set up the image for specific piece
         this.imageView = new ImageView(
-                new Image("/images/" + color + "_pawn.png")
+                new Image("/images/" + getColorAsString() + "_pawn.png")
         );
         this.imageView.setFitWidth(80);
         this.imageView.setFitHeight(80);
@@ -39,6 +39,9 @@ public class Pawn implements Piece {
         hasMoved = false;
     }
     public Color getColor() {return color;}
+    public String getColorAsString() {
+        return (color == Color.WHITE) ? "white" : "black";
+    }
     public boolean exists() {return true;}
     public PieceType getType() {return PieceType.PAWN;}
     public boolean hasMoved() {return hasMoved;}
