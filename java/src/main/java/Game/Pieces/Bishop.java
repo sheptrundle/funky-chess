@@ -39,25 +39,8 @@ public class Bishop implements Piece {
     public Node getNode() {return imageView;}
 
     public List<Position> getValidMoves() {
-        int[] dy = {1, -1};
-        int[] dx = {1, -1};
-        List<Position> validMoves = new ArrayList<>();
         MoveLogic moveLogic = new MoveLogic();
-
-        // Expand diagonals
-        for (int y : dy) {
-            for (int x : dx) {
-                int row = position.getRow() + y;
-                int col = position.getColumn() + x;
-
-                while (moveLogic.isValidMove(this, board, new Position(row, col))) {
-                    validMoves.add(new Position(row, col));
-                    row += y;
-                    col += x;
-                }
-            }
-        }
-        return validMoves;
+        return moveLogic.bishopMoveSet(this, position, board);
     }
 }
 

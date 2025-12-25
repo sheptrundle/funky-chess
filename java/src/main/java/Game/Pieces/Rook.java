@@ -43,31 +43,8 @@ public class Rook implements Piece {
     public Node getNode() {return imageView;}
 
     public List<Position> getValidMoves() {
-        int[] dxy = {1, -1};
-        List<Position> validMoves = new ArrayList<>();
-        MoveLogic moveLogic = new MoveLogic();
-
-        // Expand left/right
-        for (int dx : dxy) {
-            int col = position.getColumn() + dx;
-            int row = position.getRow();
-            while (moveLogic.isValidMove(this, board, new Position(row, col))) {
-                validMoves.add(new Position(row, col));
-                col += dx;
-            }
-        }
-
-        // Expand up/down
-        for (int dy : dxy) {
-            int row = position.getRow() + dy;
-            int col = position.getColumn();
-            while (moveLogic.isValidMove(this, board, new Position(row, col))) {
-                validMoves.add(new Position(row, col));
-                row += dy;
-            }
-        }
-
-        return validMoves;
+       MoveLogic moveLogic = new MoveLogic();
+       return moveLogic.rookMoveset(this, position, board);
     }
 
 }
