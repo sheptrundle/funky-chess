@@ -41,7 +41,13 @@ public class MoveLogic {
                 int row = position.getRow() + y;
                 int col = position.getColumn() + x;
                 while (moveLogic.isValidMove(piece, board, new Position(row, col))) {
-                    validMoves.add(new Position(row, col));
+                    Position pos = new Position(row, col);
+                    validMoves.add(pos);
+                    // Break if found capturable piece
+                    if (board.getPieceAt(pos).exists()) {
+                        break;
+                    }
+
                     row += y;
                     col += x;
                 }
@@ -61,7 +67,13 @@ public class MoveLogic {
             int col = position.getColumn() + dx;
             int row = position.getRow();
             while (moveLogic.isValidMove(piece, board, new Position(row, col))) {
-                validMoves.add(new Position(row, col));
+                Position pos = new Position(row, col);
+                validMoves.add(pos);
+                // Break if found capturable piece
+                if (board.getPieceAt(pos).exists()) {
+                    break;
+                }
+
                 col += dx;
             }
         }
@@ -71,7 +83,13 @@ public class MoveLogic {
             int row = position.getRow() + dy;
             int col = position.getColumn();
             while (moveLogic.isValidMove(piece, board, new Position(row, col))) {
-                validMoves.add(new Position(row, col));
+                Position pos = new Position(row, col);
+                validMoves.add(pos);
+                // Break if found capturable piece
+                if (board.getPieceAt(pos).exists()) {
+                    break;
+                }
+
                 row += dy;
             }
         }
