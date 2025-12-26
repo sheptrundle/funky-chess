@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="Controllers.StartScreenController"
+           prefWidth="800" prefHeight="800"
+           style="-fx-background-color: white;">
+
+    <VBox alignment="CENTER"
+          spacing="25">
+
+        <!-- Title -->
+        <Label text="Welcome to Funky Chess"
+               style="-fx-font-size: 48; -fx-font-weight: bold;"/>
+
+        <!-- Start Game Button -->
+        <Button fx:id="startGameButton"
+                text="Start Game"
+                prefWidth="180"
+                prefHeight="50"
+                onAction="#handleStartGame"
+                style="-fx-background-color: black; -fx-text-fill: white; -fx-font-size: 16;" />
+
+        <!-- Dropdown Row -->
+        <HBox spacing="40" alignment="CENTER">
+
+            <!-- Gallery -->
+            <VBox spacing="8" alignment="CENTER">
+                <Label text="Gallery"/>
+                <ComboBox fx:id="galleryDropdown" prefWidth="160"/>
+            </VBox>
+
+            <!-- Gamemode -->
+            <VBox spacing="8" alignment="CENTER">
+                <Label text="Gamemode"/>
+                <ComboBox fx:id="gamemodeDropdown" prefWidth="160"/>
+            </VBox>
+
+            <!-- Time -->
+            <VBox spacing="8" alignment="CENTER">
+                <Label text="Time"/>
+                <ComboBox fx:id="timeDropdown" prefWidth="160"/>
+            </VBox>
+
+        </HBox>
+
+        <!-- Error label -->
+        <Label fx:id="errorLabel"
+               visible="false"
+               style="-fx-text-fill: red; -fx-font-size: 16;" />
+
+    </VBox>
+</StackPane>
+
