@@ -38,12 +38,6 @@ public class ChessGameController {
         updateUI();
     }
 
-    // Places a piece into the squares array
-    public void placePieceIntoSquare(Piece piece, int row, int col) {
-        StackPane square = squares[row][col];
-        square.getChildren().add(piece.getNode());
-    }
-
     // Set up the square grid
     public void createGrid() {
         // Build the grid
