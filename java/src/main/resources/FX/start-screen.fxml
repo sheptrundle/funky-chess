@@ -27,11 +27,27 @@
                 onAction="#handleStartGame"
                 style="-fx-background-color: black; -fx-text-fill: white; -fx-font-size: 16;" />
 
-        <!-- Dropdown menus -->
-        <HBox spacing="15" alignment="CENTER">
-            <ComboBox fx:id="modeDropdown" prefWidth="150"/>
-            <ComboBox fx:id="timeDropdown" prefWidth="150"/>
-            <ComboBox fx:id="colorDropdown" prefWidth="150"/>
+        <!-- Dropdown Row -->
+        <HBox spacing="40" alignment="CENTER">
+
+            <!-- Gallery -->
+            <VBox spacing="8" alignment="CENTER">
+                <Label text="Gallery"/>
+                <ComboBox fx:id="galleryDropdown" prefWidth="160"/>
+            </VBox>
+
+            <!-- Gamemode -->
+            <VBox spacing="8" alignment="CENTER">
+                <Label text="Gamemode"/>
+                <ComboBox fx:id="gamemodeDropdown" prefWidth="160"/>
+            </VBox>
+
+            <!-- Time -->
+            <VBox spacing="8" alignment="CENTER">
+                <Label text="Time"/>
+                <ComboBox fx:id="timeDropdown" prefWidth="160"/>
+            </VBox>
+
         </HBox>
 
         <!-- Error label -->
