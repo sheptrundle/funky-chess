@@ -9,16 +9,18 @@ public class MoveLogic {
 
     public boolean isValidMove(Piece piece, ChessBoard board, Position destination) {
         if (piece == null) throw new NullPointerException("Moving piece ~" + piece + "~ is null");
+
+        // Check if the destination is within bounds before anything else
+        if (!destination.isOnBoard()) {return false;}
+
         Piece destPiece = board.getPieceAt(destination);
 
         // Can move to an open square or capture an opponents piece
-        if (destination.isOnBoard()) {
-            if (!destPiece.exists() || destPiece.getColor() != piece.getColor()) {
-                if (piece.getType() == PieceType.KING) {
-                    // check/mate logic goes here
-                }
-                return true;
+        if (!destPiece.exists() || destPiece.getColor() != piece.getColor()) {
+            if (piece.getType() == PieceType.KING) {
+                // todo: check/mate logic goes here
             }
+            return true;
         }
 
         // Cannot move to position of own teams piece, or anything off board

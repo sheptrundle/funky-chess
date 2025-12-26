@@ -6,6 +6,8 @@ import Game.Features.Position;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class ChessGameController {
     @FXML
@@ -78,9 +80,15 @@ public class ChessGameController {
     }
 
     private void highlightMoves(Piece piece) {
+        System.out.println("Highlighting moves for " + piece.getColorAsString() + " " + piece.getType().toString() + " at square " + piece.getPosition() + "...");
         for (Position p : piece.getValidMoves()) {
-            squares[p.getRow()][p.getColumn()]
-                    .setStyle("-fx-border-color: green; -fx-border-width: 3;");
+            StackPane square = squares[p.getRow()][p.getColumn()];
+            // Create transparent circle
+            Circle circle = new Circle(33); // radius
+            circle.setFill(Color.rgb(180, 180, 180, 0.6)); // light gray semi-transparent
+            circle.setMouseTransparent(true); // clicks pass through
+            square.getChildren().add(circle);
         }
+        System.out.println("DONE");
     }
 }
