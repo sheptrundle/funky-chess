@@ -14,8 +14,7 @@ import javafx.scene.shape.Circle;
 import java.util.HashSet;
 
 public class ChessGameController {
-    @FXML
-    private GridPane boardGrid;
+    @FXML private GridPane boardGrid;
     private StackPane[][] squares = new StackPane[8][8];
     private Circle[][] highlights = new Circle[8][8];
     private ChessBoard chessBoard;
@@ -31,6 +30,7 @@ public class ChessGameController {
     // Sets current chessboard and updates UI
     public void setChessBoard(ChessBoard board) {
         this.chessBoard = board;
+        chessBoard.setGallery(gallery);
         createGrid();
         chessBoard.initialize();
         validMoves = new HashSet<>();
