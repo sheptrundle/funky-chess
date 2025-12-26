@@ -36,7 +36,7 @@ public class Pawn implements Piece {
     public Position getPosition() {return position;}
     public void setPosition(Position position) {
         this.position = position;
-        hasMoved = false;
+        hasMoved = true;
     }
     public Color getColor() {return color;}
     public String getColorAsString() {

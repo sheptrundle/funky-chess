@@ -108,6 +108,7 @@ public class ChessBoard {
         if (!piece.exists()) {
             throw new IllegalArgumentException("Cannot move NullPiece from " + from + " to " + to);
         }
+
         piece.setPosition(to);
         setPieceAt(to, piece);
         setPieceAt(from, new NullPiece(from));
