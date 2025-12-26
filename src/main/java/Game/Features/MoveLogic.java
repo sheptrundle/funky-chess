@@ -1,5 +1,4 @@
 package Game.Features;
-import Game.Pieces.Bishop;
 import Game.Pieces.Pawn;
 import Game.Pieces.Piece;
 
@@ -19,7 +18,7 @@ public class MoveLogic {
         // Can move to an open square or capture an opponents piece
         if (!destPiece.exists() || destPiece.getColor() != piece.getColor()) {
             if (piece.getType() == PieceType.KING) {
-                // todo: check/mate logic goes here
+                // todo: check/mate logic goes here, gonna need other classes to make this word I bet
             }
             return true;
         }
@@ -158,6 +157,10 @@ public class MoveLogic {
         }
 
         return validMoves;
+    }
+
+    public boolean pawnPromotion(Piece piece, Position to) {
+        return piece.getType() == PieceType.PAWN && (to.getRow() == 7 || to.getRow() == 0);
     }
 
 

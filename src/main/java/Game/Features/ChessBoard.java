@@ -117,8 +117,19 @@ public class ChessBoard {
             throw new IllegalArgumentException("Cannot move NullPiece from " + from + " to " + to);
         }
 
-        piece.setPosition(to);
-        setPieceAt(to, piece);
-        setPieceAt(from, new NullPiece(from));
+        // Logic for if the move is a pawn promotion
+        MoveLogic moveLogic = new MoveLogic();
+        if (moveLogic.pawnPromotion(piece, to)) {
+            setPieceAt(to, new Queen(to, this, piece.getColor()));
+            setPieceAt(from, new NullPiece(from));
+        }
+
+        // Regular move
+        else {
+            piece.setPosition(to);
+            setPieceAt(to, piece);
+            setPieceAt(from, new NullPiece(from));
+        }
     }
+
 }
