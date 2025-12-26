@@ -37,6 +37,8 @@ public class ChessGameController {
         boardGrid.getChildren().clear();
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
+                final int r = row;
+                final int c = col;
 
                 StackPane square = new StackPane();
                 square.setPrefSize(100, 100);
@@ -46,7 +48,7 @@ public class ChessGameController {
                 else {square.setStyle("-fx-background-color: #b58863");}
 
                 squares[row][col] = square;
-                square.setOnMouseClicked(event -> handleFirstClick(row, col));
+                square.setOnMouseClicked(event -> handleFirstClick(r, c)); //todo: fix this
 
                 // Use 7 - row because the FX board is flipped
                 boardGrid.add(square, col, 7 - row);
@@ -54,8 +56,12 @@ public class ChessGameController {
         }
     }
     private void handleFirstClick(int row, int col) {
-
-
+        Position clicked = new Position(row, col);
+        // First click: select a piece
+        Piece piece = chessBoard.getPieceAt(clicked);
+        if (piece.exists()) {
+            highlightMoves(piece);
+        }
     }
 
     // Shows all the UI (highlights and pieces) based on current chessBoard state
