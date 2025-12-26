@@ -31,6 +31,7 @@ public class ChessGameController {
         createGrid();
         chessBoard.initialize();
         validMoves = new HashSet<>();
+        movingPiece = new NullPiece(new Position(-1, -1));
         updateUI();
     }
 
@@ -74,17 +75,29 @@ public class ChessGameController {
             System.out.println("Clicked is a valid move, moving...");
             chessBoard.movePiece(movingPiece, clicked);
             clearHighlights();
+
+            // Update moving piece to no currently selected piece
+            movingPiece = new NullPiece(new Position(-1, -1));
+
             System.out.println("MOVED");
         }
 
         // Select a piece and highlight moves
         else {
             Piece piece = chessBoard.getPieceAt(clicked);
-            if (piece.exists()) {
+            // If clicked on current moving piece, remove highlights/reset moving piece and move on
+            if (clicked.equals(movingPiece.getPosition())) {
+                clearHighlights();
+                movingPiece = new NullPiece(new Position(-1, -1));
+            }
+            // Clicked on a valid piece, but not in previous moveset
+            else if (piece.exists()) {
                 System.out.println("Highlighting new piece " + piece.getType() + " at " + piece.getPosition());
                 highlightMoves(piece);
                 movingPiece = piece;
-            } else {
+            }
+            // Clicked on an invalid (null) piece, nothing happens
+            else {
                 System.out.println("Clicked empty square at " + piece.getPosition() + ", skipping");
             }
         }
