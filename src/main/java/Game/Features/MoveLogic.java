@@ -103,9 +103,8 @@ public class MoveLogic {
     }
 
     // Return all valid moves for a Pawn at a given position on a given board
-    public List<Position> pawnMoveSet(Pawn pawn, Position position, ChessBoard board) {
+    public List<Position> pawnMoveSet(Pawn pawn, Position position, ChessBoard board, boolean onlyTargets) {
         List<Position> validMoves = new ArrayList<>();
-
         ChessBoard useBoard;
         Position usePos;
         boolean needsFlip = false;
@@ -122,6 +121,23 @@ public class MoveLogic {
         int row = usePos.getRow();
         int col = usePos.getColumn();
 
+        // Diagonal captures
+        int[] dx = {-1, 1};
+        for (int d : dx) {
+            Position diag = new Position(row + 1, col + d);
+            if (!diag.isOnBoard()) continue;
+
+            Piece target = useBoard.getPieceAt(diag);
+            if (target.exists() && target.getColor() != pawn.getColor()) {
+                validMoves.add(diag);
+            }
+        }
+
+        // If specified to return only the targets squares, just return now
+        if (onlyTargets) {
+            return validMoves;
+        }
+
         // Forward moves
         for (int i = 1; i <= 2; i++) {
             Position to = new Position(row + i, col);
@@ -135,19 +151,7 @@ public class MoveLogic {
             if (pawn.hasMoved()) break;
         }
 
-        // Diagonal captures
-        int[] dx = {-1, 1};
-        for (int d : dx) {
-            Position diag = new Position(row + 1, col + d);
-            if (!diag.isOnBoard()) continue;
-
-            Piece target = useBoard.getPieceAt(diag);
-            if (target.exists() && target.getColor() != pawn.getColor()) {
-                validMoves.add(diag);
-            }
-        }
-
-        // Flip back if black
+        // Flip back if needed (black)
         if (needsFlip) {
             List<Position> flipped = new ArrayList<>();
             for (Position p : validMoves) {
@@ -155,7 +159,6 @@ public class MoveLogic {
             }
             return flipped;
         }
-
         return validMoves;
     }
 

@@ -44,6 +44,6 @@ public class Pawn implements Piece {
 
     public List<Position> getValidMoves() {
         MoveLogic moveLogic = new MoveLogic();
-        return moveLogic.pawnMoveSet(this, position, board);
+        return moveLogic.pawnMoveSet(this, position, board, false);
     }
 }
