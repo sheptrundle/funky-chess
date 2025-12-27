@@ -5,21 +5,26 @@ import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.Piece;
 import Game.Pieces.King;
 
+import java.time.Duration;
 import java.util.HashSet;
 
 public class Player {
-    private int timeLeft;
+    private final ChessClock clock;
     private Team team;
     private Color color;
 
-    public Player(Color color) {
+    public Player(Color color, Duration initialTime) {
         this.color = color;
         this.team = new Team();
+        this.clock = new ChessClock(initialTime);
     }
 
     // Getters and setters for team
     public Team getTeam() {return team;}
     public void setTeam(Team team) {this.team = team;}
+
+    // Getter for Clock
+    public ChessClock getClock() {return clock;}
 
     // Access team via player
     public void addPiece(Piece piece) {team.add(piece);}

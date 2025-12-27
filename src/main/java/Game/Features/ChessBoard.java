@@ -6,6 +6,8 @@ import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.Piece;
 import UI.Gallery;
 
+import java.time.Duration;
+
 public class ChessBoard {
     public Piece[][] board;
     Gallery gallery;
@@ -15,8 +17,8 @@ public class ChessBoard {
     public ChessBoard() {
         gallery = Gallery.PIXEL;
         board = new Piece[8][8];
-        whitePlayer = new Player(Color.WHITE);
-        blackPlayer = new Player(Color.BLACK);
+        whitePlayer = new Player(Color.WHITE, Duration.ofMinutes(10));
+        blackPlayer = new Player(Color.BLACK, Duration.ofMinutes(10));
     }
 
     // Returns the gallery of the board
