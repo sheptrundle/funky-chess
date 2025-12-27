@@ -54,7 +54,7 @@ public class King implements Piece {
         MoveLogic moveLogic = new MoveLogic();
         for (int i = 0; i < 8; i++) {
             Position newPos = new Position(position.getRow() + dx[i], position.getColumn() + dy[i]);
-            if (moveLogic.isValidMove(this, board, newPos) && !targetedPositions.contains(newPos)) {
+            if (moveLogic.isValidMove(this, newPos) && !targetedPositions.contains(newPos)) {
                 validMoves.add(newPos);
             }
         }

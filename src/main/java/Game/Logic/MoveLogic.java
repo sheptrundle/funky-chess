@@ -9,7 +9,9 @@ import java.util.List;
 
 public class MoveLogic {
 
-    public boolean isValidMove(Piece piece, ChessBoard board, Position destination) {
+    public boolean isValidMove(Piece piece, Position destination) {
+        ChessBoard board = piece.getBoard();
+
         if (piece == null) throw new NullPointerException("Moving piece ~" + piece + "~ is null");
 
         // Check if the destination is within bounds before anything else
@@ -42,7 +44,7 @@ public class MoveLogic {
 
         for (int i = 0; i < 8; i++) {
             Position newPos = new Position(position.getRow() + dx[i], position.getColumn() + dy[i]);
-            if (isValidMove(piece, board, newPos)) {
+            if (isValidMove(piece, newPos)) {
                 validMoves.add(newPos);
             }
         }
@@ -64,7 +66,7 @@ public class MoveLogic {
             for (int x : dx) {
                 int row = position.getRow() + y;
                 int col = position.getColumn() + x;
-                while (moveLogic.isValidMove(piece, board, new Position(row, col))) {
+                while (moveLogic.isValidMove(piece, new Position(row, col))) {
                     Position pos = new Position(row, col);
                     validMoves.add(pos);
                     // Break if found capturable piece
@@ -93,7 +95,7 @@ public class MoveLogic {
         for (int dx : dxy) {
             int col = position.getColumn() + dx;
             int row = position.getRow();
-            while (moveLogic.isValidMove(piece, board, new Position(row, col))) {
+            while (moveLogic.isValidMove(piece, new Position(row, col))) {
                 Position pos = new Position(row, col);
                 validMoves.add(pos);
                 // Break if found capturable piece
@@ -109,7 +111,7 @@ public class MoveLogic {
         for (int dy : dxy) {
             int row = position.getRow() + dy;
             int col = position.getColumn();
-            while (moveLogic.isValidMove(piece, board, new Position(row, col))) {
+            while (moveLogic.isValidMove(piece, new Position(row, col))) {
                 Position pos = new Position(row, col);
                 validMoves.add(pos);
                 // Break if found capturable piece
