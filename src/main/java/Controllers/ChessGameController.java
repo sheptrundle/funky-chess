@@ -1,6 +1,8 @@
 package Controllers;
 
 import Game.Features.ChessBoard;
+import Game.Pieces.Assets.Color;
+import Game.Pieces.King;
 import UI.CircleBuilder;
 import UI.Gallery;
 import Game.Pieces.NullPiece;
@@ -10,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import java.util.HashSet;
 
@@ -22,6 +23,7 @@ public class ChessGameController {
     private HashSet<Position> validMoves;
     private Piece movingPiece;
     private Gallery gallery;
+    private Circle checkHighlight;
 
     public void initialize(Gallery gallery) {
         this.gallery = gallery;
@@ -117,8 +119,11 @@ public class ChessGameController {
                 square.getChildren().add(piece.getNode());
             }
         }
+        // Highlight checks at end
+        highlightChecks();
     }
 
+    // Highlight all valid moves for a piece
     private void highlightMoves(Piece piece) {
         System.out.println("Highlighting moves for " + piece.getColorAsString() + " " + piece.getType() + " at square " + piece.getPosition() + "...");
         // Clear old highlights first
@@ -128,13 +133,33 @@ public class ChessGameController {
             validMoves.add(pos);
             StackPane square = squares[pos.getRow()][pos.getColumn()];
 
-            CircleBuilder cb = new CircleBuilder();
-            Circle circle = cb.buildCircle("blue");
+            Circle circle = CircleBuilder.buildCircle("blue");
 
             highlights[pos.getRow()][pos.getColumn()] = circle;
             square.getChildren().add(circle);
         }
         System.out.println("DONE");
+    }
+
+    // Highlight a king piece if and only if it is in check
+    private void highlightChecks() {
+        // Remove old check highlight if it exists
+        if (checkHighlight != null) {
+            ((StackPane) checkHighlight.getParent()).getChildren().remove(checkHighlight);
+            checkHighlight = null;
+        }
+
+        // Check both kings
+        for (Color color : Color.values()) {
+            if (chessBoard.getPlayer(color).getKing().isInCheck()) {
+
+                Position kingPos = chessBoard.getPlayer(color).getKing().getPosition();
+                StackPane square = squares[kingPos.getRow()][kingPos.getColumn()];
+
+                checkHighlight = CircleBuilder.buildCircle("red");
+                square.getChildren().add(checkHighlight);
+            }
+        }
     }
 
     private void clearHighlights() {

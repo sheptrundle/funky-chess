@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class CircleBuilder {
-    public Circle buildCircle(String color) {
+    public static Circle buildCircle(String color) {
         Circle circle = new Circle(33);
         circle.setMouseTransparent(true); // clicks pass through
 

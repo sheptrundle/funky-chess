@@ -3,6 +3,9 @@ package Game.Live;
 import Game.Features.Position;
 import Game.Logic.TargetLogic;
 import Game.Pieces.Assets.Piece;
+import Game.Pieces.Assets.PieceType;
+import Game.Pieces.King;
+
 import java.util.HashSet;
 
 public class Team {
@@ -19,6 +22,16 @@ public class Team {
 
     public boolean targets(Position position) {
         return allTargets.contains(position);
+    }
+
+    // Returns this players king piece
+    public King getKing() {
+        for (Piece piece : pieces) {
+            if (piece.getType().equals(PieceType.KING)) {
+                return (King) piece;
+            }
+        }
+        throw new IllegalArgumentException("King not found in pieces: " + pieces.toString());
     }
 
     // Return all current targets

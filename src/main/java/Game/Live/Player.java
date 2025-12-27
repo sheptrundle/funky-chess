@@ -3,6 +3,7 @@ package Game.Live;
 import Game.Features.Position;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.Piece;
+import Game.Pieces.King;
 
 import java.util.HashSet;
 
@@ -26,5 +27,6 @@ public class Player {
     public boolean targets(Position position) {return team.targets(position);}
     public HashSet<Position> getAllTargets() {return team.getAllTargets();}
     public void calcAllTargets() {team.calcAllTargets();}
+    public King getKing() {return team.getKing();}
 
 }
