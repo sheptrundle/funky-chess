@@ -122,7 +122,9 @@ public class TargetLogic {
                 targets.add(pos);
 
                 // Stop sliding once any piece is encountered
-                if (board.getPieceAt(pos).exists() && board.getPieceAt(pos).getType() != PieceType.KING) break;
+                Piece encountered = board.getPieceAt(pos);
+                if (encountered.exists() &&
+                        (encountered.getType() != PieceType.KING || encountered.getColor() == piece.getColor())) break;
             }
         }
         return targets;

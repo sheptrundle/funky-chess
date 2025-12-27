@@ -6,6 +6,7 @@ import Game.Pieces.Assets.Piece;
 import Game.Pieces.Assets.PieceType;
 import Game.Pieces.King;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Team {
@@ -43,5 +44,13 @@ public class Team {
             TargetLogic targetLogic = new TargetLogic();
             allTargets.addAll(targetLogic.getTargetsForPiece(piece));
         }
+    }
+
+    public String toString() {
+        ArrayList<String> parts = new ArrayList<>();
+        for (Piece piece : pieces) {
+            parts.add("{" + piece.getType().toString() + " @ " + piece.getPosition().toString() + "} ");
+        }
+        return parts.toString();
     }
 }
