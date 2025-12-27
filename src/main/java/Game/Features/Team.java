@@ -3,7 +3,6 @@ package Game.Features;
 import Game.Pieces.Pawn;
 import Game.Pieces.Piece;
 import java.util.HashSet;
-import java.util.List;
 
 public class Team {
     private HashSet<Piece> pieces;
@@ -12,8 +11,8 @@ public class Team {
         pieces = new HashSet<>();
     }
 
-    public void addPiece(Piece piece) {pieces.add(piece);}
-    public void removePiece(Piece piece) {pieces.remove(piece);}
+    public void add(Piece piece) {pieces.add(piece);}
+    public void remove(Piece piece) {pieces.remove(piece);}
 
     public HashSet<Position> getAllTargets() {
         HashSet<Position> targets = new HashSet<>();

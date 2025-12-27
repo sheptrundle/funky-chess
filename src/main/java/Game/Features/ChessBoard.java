@@ -4,10 +4,14 @@ import Game.Pieces.*;
 public class ChessBoard {
     public Piece[][] board;
     Gallery gallery;
+    Team whiteTeam;
+    Team blackTeam;
 
     public ChessBoard() {
         gallery = Gallery.PIXEL;
         board = new Piece[8][8];
+        whiteTeam = new Team();
+        blackTeam = new Team();
     }
 
     // Returns the gallery of the board
@@ -110,7 +114,7 @@ public class ChessBoard {
         }
     }
 
-    // This will have to get wayyyy more complicated I assume?
+    // Move a piece from one position to another
     public void movePiece(Piece piece, Position to) {
         Position from = piece.getPosition();
         if (!piece.exists()) {
@@ -132,4 +136,25 @@ public class ChessBoard {
         }
     }
 
+    public void setStartingTeams() {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Position pos = new Position(row, col);
+                Piece piece = getPieceAt(pos);
+
+                // Skip null pieces
+                if (!piece.exists()) {continue;}
+
+                // Add white piece
+                else if (piece.getColor() == Color.WHITE) {
+                    whiteTeam.add(piece);
+                }
+                // Add black piece
+                else if (piece.getColor() == Color.BLACK) {
+                    blackTeam.add(piece);
+                }
+                else {throw new  IllegalArgumentException("Failed getting color from piece " + piece);}
+            }
+        }
+    }
 }
