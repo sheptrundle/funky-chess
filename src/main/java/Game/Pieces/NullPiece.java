@@ -1,5 +1,6 @@
 package Game.Pieces;
 
+import Game.Features.ChessBoard;
 import Game.Features.Color;
 import Game.Features.PieceType;
 import Game.Features.Position;
@@ -19,6 +20,7 @@ public class NullPiece implements Piece {
     public String getColorAsString() {throw new NullPointerException("Cannot get color (as string) of null piece at " + position);}
     public Position getPosition() {return position;}
     public void setPosition(Position position) {this.position = position;}
+    public ChessBoard getBoard() {throw new NullPointerException("Cannot get board of null piece at " + position);}
     public List<Position> getValidMoves() {throw new NullPointerException("Cannot get valid moves of null piece at " + position);}
     public boolean exists() {return false;}
     public PieceType getType() {return PieceType.NULLPIECE;}

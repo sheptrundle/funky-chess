@@ -28,6 +28,7 @@ public class Knight implements Piece {
     // Getters and Setters
     public Position getPosition() {return position;}
     public void setPosition(Position position) {this.position = position;}
+    public ChessBoard getBoard() {return board;}
     public Color getColor() {return color;}
     public String getColorAsString() {
         return (color == Color.WHITE) ? "white" : "black";

@@ -33,6 +33,7 @@ public class Pawn implements Piece {
         this.position = position;
         hasMoved = true;
     }
+    public ChessBoard getBoard() {return board;}
     public Color getColor() {return color;}
     public String getColorAsString() {
         return (color == Color.WHITE) ? "white" : "black";

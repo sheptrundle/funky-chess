@@ -1,5 +1,6 @@
 package Game.Pieces;
 
+import Game.Features.ChessBoard;
 import Game.Features.Color;
 import Game.Features.PieceType;
 import Game.Features.Position;
@@ -19,6 +20,9 @@ public interface Piece {
 
     // Sets new position of the piece
     public void setPosition(Position position);
+
+    // Returns the chessboard that piece is using
+    public ChessBoard getBoard();
 
     // Returns a set of valid moves from given position
     public List<Position> getValidMoves();
