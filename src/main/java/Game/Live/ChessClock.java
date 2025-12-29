@@ -43,4 +43,13 @@ public class ChessClock {
     public Duration getTimeLeft() {
         return timeLeft;
     }
+
+    public String getTimeLeftString() {
+        // get total seconds as integer
+        int totalSeconds = (int) timeLeft.toSeconds();
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+
+        return String.format("%d:%02d", minutes, seconds);
+    }
 }

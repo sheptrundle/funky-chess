@@ -54,5 +54,4 @@ public class LiveGame {
     public boolean isLive() {
         return (!whitePlayer.isCheckmated() && !blackPlayer.isCheckmated());
     }
-
 }

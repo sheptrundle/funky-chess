@@ -9,7 +9,7 @@
 <?import javafx.geometry.Insets?>
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="Controllers.StartScreenController"
-           prefWidth="800" prefHeight="800"
+           prefWidth="1000" prefHeight="800"
            style="-fx-background-color: white;">
 
     <VBox alignment="CENTER"
