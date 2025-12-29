@@ -90,6 +90,7 @@ public class ChessGameController {
     private void handleClick(int row, int col) {
         Position clicked = new Position(row, col);
 
+        // First IF is a SUCCESSFUL TURN
         // Move piece to this square
         System.out.println("clicked: " + clicked);
         if (validMoves.contains(clicked)) {
@@ -102,6 +103,12 @@ public class ChessGameController {
 
             System.out.println("MOVED");
             liveGame.switchTurn();
+
+            // Check if game has ended
+            if (!liveGame.isLive()) {
+                liveGame.stopClocks();
+                System.out.println("Checkmate");
+            }
         }
 
         // Select a piece and highlight moves

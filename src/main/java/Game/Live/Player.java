@@ -40,7 +40,17 @@ public class Player {
 
     // Return true if player is currently checkmated
     public boolean isCheckmated() {
-        return team.getKing().getValidMoves().isEmpty();
+        return team.getKing().getValidMoves().isEmpty() && team.getKing().isInCheck();
+
+        /*
+        Todo: well what if a king has no valid moves but it has a piece that can block?
+        Idea: make a method in chessboard that returns a copy of a chessboard after ONE specific move is made
+        then run every possible move and see if any of them create a state on the new chessboard where the king is NOT in check
+        */
+
+        /*
+        Todo: Also, when the king is in check, we cannot allow other pieces to move unless it gets king out of check
+         */
     }
 
 }

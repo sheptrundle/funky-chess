@@ -48,6 +48,12 @@ public class LiveGame {
         currentTurn = PieceLogic.getOppositeColor(currentTurn);
     }
 
+    // Stops both clocks
+    public void stopClocks() {
+        blackPlayer.stopTicking();
+        whitePlayer.stopTicking();
+    }
+
     // Returns the current time
     public Duration getTimeLeft(Color color) {
         if (color == Color.WHITE) {
