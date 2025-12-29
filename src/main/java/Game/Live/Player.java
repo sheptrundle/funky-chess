@@ -4,8 +4,8 @@ import Game.Features.Position;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.Piece;
 import Game.Pieces.King;
+import javafx.util.Duration;
 
-import java.time.Duration;
 import java.util.HashSet;
 
 public class Player {
@@ -25,6 +25,11 @@ public class Player {
 
     // Getter for Clock
     public ChessClock getClock() {return clock;}
+
+    // Start counting down this players clock
+    public void startTicking() {
+
+    }
 
     // Access team via player
     public void addPiece(Piece piece) {team.add(piece);}
