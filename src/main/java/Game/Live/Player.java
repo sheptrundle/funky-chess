@@ -26,10 +26,9 @@ public class Player {
     // Getter for Clock
     public ChessClock getClock() {return clock;}
 
-    // Start counting down this players clock
-    public void startTicking() {
-
-    }
+    // Start/stop counting down this players clock
+    public void startTicking() {clock.startTicking();}
+    public void stopTicking() {clock.stopTicking();}
 
     // Access team via player
     public void addPiece(Piece piece) {team.add(piece);}

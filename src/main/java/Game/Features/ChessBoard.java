@@ -17,8 +17,6 @@ public class ChessBoard {
     public ChessBoard() {
         gallery = Gallery.PIXEL;
         board = new Piece[8][8];
-        whitePlayer = new Player(Color.WHITE, Duration.minutes(10));
-        blackPlayer = new Player(Color.BLACK, Duration.minutes(10));
     }
 
     // Returns the gallery of the board
