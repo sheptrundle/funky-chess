@@ -16,12 +16,14 @@ public class Knight implements Piece {
     Position position;
     ChessBoard board;
     Color color;
+    boolean hasMoved;
     private ImageView imageView;
 
     public Knight(Position position, ChessBoard board, Color color) {
         this.position = position;
         this.board = board;
         this.color = color;
+        hasMoved = false;
 
         // Set up the image for specific piece
         ImageFactory imageFactory = new ImageFactory();
@@ -45,6 +47,9 @@ public class Knight implements Piece {
     public boolean exists() {return true;}
     public PieceType getType() {return PieceType.KNIGHT;}
     public Node getNode() {return imageView;}
+    public boolean hasMoved() {return hasMoved;}
+    public void setHasMoved(boolean hasMoved) {this.hasMoved = hasMoved;}
+    public String toString() {return PieceLogic.colorToString(color) + " " + getType() + " @ " + position;}
 
     // Return a list of all the valid moves from knight at its current position
     public List<Position> getValidMoves() {

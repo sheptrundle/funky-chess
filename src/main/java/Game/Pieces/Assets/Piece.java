@@ -40,4 +40,12 @@ public interface Piece {
     // Return node to use as an image on top of each square
     public Node getNode();
 
+    // Return or set if the piece has moved (really only useful for Pawns)
+    public boolean hasMoved();
+    public void setHasMoved(boolean hasMoved);
+
+    // Format {color pieceType @ position}
+    public String toString();
+
+
 }

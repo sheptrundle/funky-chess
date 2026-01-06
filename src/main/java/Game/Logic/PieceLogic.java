@@ -10,4 +10,11 @@ public class PieceLogic {
             case BLACK -> Color.WHITE;
         };
     }
+
+    public static String colorToString(Color color) {
+        return switch (color) {
+            case WHITE -> "White";
+            case BLACK -> "Black";
+        };
+    }
 }

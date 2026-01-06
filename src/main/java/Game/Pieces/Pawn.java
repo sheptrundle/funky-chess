@@ -49,8 +49,11 @@ public class Pawn implements Piece {
     }
     public boolean exists() {return true;}
     public PieceType getType() {return PieceType.PAWN;}
-    public boolean hasMoved() {return hasMoved;}
     public Node getNode() {return imageView;}
+    public boolean hasMoved() {return hasMoved;}
+    public void setHasMoved(boolean hasMoved) {this.hasMoved = hasMoved;}
+    public String toString() {return PieceLogic.colorToString(color) + " " + getType() + " @ " + position;}
+
 
     public List<Position> getValidMoves() {
         MoveLogic moveLogic = new MoveLogic();

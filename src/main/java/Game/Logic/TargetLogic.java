@@ -1,15 +1,13 @@
 package Game.Logic;
 
 import Game.Features.ChessBoard;
-import Game.Live.Player;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.PieceType;
 import Game.Features.Position;
 import Game.Pieces.Assets.Piece;
-import Game.Pieces.King;
+import Game.Pieces.NullPiece;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class TargetLogic {
@@ -18,7 +16,6 @@ public class TargetLogic {
     public static List<Position> getTargetsForPiece(Piece piece) {
         List<Position> targets = new ArrayList<>();
         Position start = piece.getPosition();
-        ChessBoard board = piece.getBoard();
 
         switch (piece.getType()) {
             // Pawn
@@ -119,6 +116,40 @@ public class TargetLogic {
         }
         return false;
     }
+
+    // Simulates a move, sees if the moving team is in check after it, then restores board
+    public static boolean inCheckAfterMove(Piece piece, Position to) {
+        // Logic for resetting has moved if the piece is a pawn
+        boolean saveHasMoved = piece.hasMoved();
+
+        Position from = piece.getPosition();
+        ChessBoard board = piece.getBoard();
+
+        // Save captured piece (even if NullPiece)
+        Piece captured = board.getPieceAt(to);
+
+        // Make hypothetical move
+        board.setPieceAt(from, new NullPiece(from));
+        board.setPieceAt(to, piece);
+        piece.setPosition(to);
+
+        // Check king safety
+        boolean inCheck = board.getKing(piece.getColor()).isInCheck();
+
+        // Rollback
+        piece.setPosition(from);
+        board.setPieceAt(from, piece);
+        board.setPieceAt(to, captured);
+
+        // Reset hasMoved field
+        piece.setHasMoved(saveHasMoved);
+
+        System.out.println("after making hypothetical move of " + piece.toString() + " to " + to + ". confirmed that is in check evaluates to " + inCheck);
+
+        return inCheck;
+    }
+
+
 
     // Helper method for Rook, Bishop, Queen
     public static List<Position> slidingTargets(Piece piece, int[][] directions) {

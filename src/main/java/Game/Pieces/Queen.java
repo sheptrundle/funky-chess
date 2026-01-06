@@ -17,12 +17,14 @@ public class Queen implements Piece {
     Position position;
     ChessBoard board;
     Color color;
+    boolean hasMoved;
     private ImageView imageView;
 
     public Queen(Position position, ChessBoard board, Color color) {
         this.position = position;
         this.board = board;
         this.color = color;
+        hasMoved = false;
 
         // Set up the image for specific piece
         ImageFactory imageFactory = new ImageFactory();
@@ -46,6 +48,9 @@ public class Queen implements Piece {
     public boolean exists() {return true;}
     public PieceType getType() {return PieceType.QUEEN;}
     public Node getNode() {return imageView;}
+    public boolean hasMoved() {return hasMoved;}
+    public void setHasMoved(boolean hasMoved) {this.hasMoved = hasMoved;}
+    public String toString() {return PieceLogic.colorToString(color) + " " + getType() + " @ " + position;}
 
     public List<Position> getValidMoves() {
         MoveLogic moveLogic = new MoveLogic();

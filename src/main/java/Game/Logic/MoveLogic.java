@@ -1,6 +1,5 @@
 package Game.Logic;
 import Game.Features.*;
-import Game.Live.Player;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.PieceType;
 import Game.Pieces.Pawn;
@@ -14,20 +13,13 @@ public class MoveLogic {
     public boolean isValidMove(Piece piece, Position destination) {
         ChessBoard board = piece.getBoard();
 
-        if (piece == null) throw new NullPointerException("Moving piece ~" + piece + "~ is null");
-
         // Check if the destination is within bounds before anything else
         if (!destination.isOnBoard()) {return false;}
 
         Piece destPiece = board.getPieceAt(destination);
 
         // Can move to an open square or capture an opponents piece
-        if (!destPiece.exists() || destPiece.getColor() != piece.getColor()) {
-            return true;
-        }
-
-        // Cannot move to position of own teams piece, or anything off board
-        return false;
+        return !destPiece.exists() || destPiece.getColor() != piece.getColor();
     }
 
     // Return all valid moves for a Knight at a given position on a given board
@@ -40,7 +32,12 @@ public class MoveLogic {
 
         for (int i = 0; i < 8; i++) {
             Position newPos = new Position(position.getRow() + dx[i], position.getColumn() + dy[i]);
+
             if (isValidMove(piece, newPos)) {
+                // First see if this piece results in a check. Not allowed if so
+                if (TargetLogic.inCheckAfterMove(piece, newPos)) {
+                    continue;
+                }
                 validMoves.add(newPos);
             }
         }
@@ -63,7 +60,14 @@ public class MoveLogic {
                 int row = position.getRow() + y;
                 int col = position.getColumn() + x;
                 while (moveLogic.isValidMove(piece, new Position(row, col))) {
+                    // First see if this piece results in a check. Not allowed if so
                     Position pos = new Position(row, col);
+                    if (TargetLogic.inCheckAfterMove(piece, pos)) {
+                        row += y;
+                        col += x;
+                        continue;
+                    }
+
                     validMoves.add(pos);
                     // Break if found capturable piece
                     if (board.getPieceAt(pos).exists()) {
@@ -93,6 +97,12 @@ public class MoveLogic {
             int row = position.getRow();
             while (moveLogic.isValidMove(piece, new Position(row, col))) {
                 Position pos = new Position(row, col);
+                // First see if this piece results in a check. Not allowed if so
+                if (TargetLogic.inCheckAfterMove(piece, pos)) {
+                    col += dx;
+                    continue;
+                }
+
                 validMoves.add(pos);
                 // Break if found capturable piece
                 if (board.getPieceAt(pos).exists()) {
@@ -109,6 +119,12 @@ public class MoveLogic {
             int col = position.getColumn();
             while (moveLogic.isValidMove(piece, new Position(row, col))) {
                 Position pos = new Position(row, col);
+                // See if this piece results in a check. Not allowed if so
+                if (TargetLogic.inCheckAfterMove(piece, pos)) {
+                    row += dy;
+                    continue;
+                }
+
                 validMoves.add(pos);
                 // Break if found capturable piece
                 if (board.getPieceAt(pos).exists()) {
@@ -128,6 +144,25 @@ public class MoveLogic {
         return queenMoves;
     }
 
+    public List<Position> kingMoveset(Piece piece) {
+        int[] dx = { 1,  1,  1,  0, 0, -1, -1, -1 };
+        int[] dy = { -1,  0, 1, -1, 1, -1,  0,  1 };
+        List<Position> validMoves = new ArrayList<>();
+        Position position = piece.getPosition();
+        ChessBoard board = piece.getBoard();
+        Color color = piece.getColor();
+
+        MoveLogic moveLogic = new MoveLogic();
+        for (int i = 0; i < 8; i++) {
+            Position newPos = new Position(position.getRow() + dx[i], position.getColumn() + dy[i]);
+            if (moveLogic.isValidMove(piece, newPos) && !TargetLogic.isTargeted(board, newPos, color)) {
+                validMoves.add(newPos);
+            }
+        }
+
+        return validMoves;
+    }
+
     // Return all valid moves for a Pawn at a given position on a given board
     public List<Position> pawnMoveSet(Pawn pawn) {
         Position position = pawn.getPosition();
@@ -136,14 +171,17 @@ public class MoveLogic {
         List<Position> validMoves = new ArrayList<>();
         ChessBoard useBoard;
         Position usePos;
+        Pawn usePawn;
         boolean needsFlip = false;
 
         if (pawn.getColor() == Color.WHITE) {
             useBoard = board;
             usePos = position;
+            usePawn = pawn;
         } else {
             useBoard = board.flipped();
             usePos = position.flipped();
+            usePawn = new Pawn(usePos, useBoard, pawn.getColor());
             needsFlip = true;
         }
 
@@ -158,6 +196,11 @@ public class MoveLogic {
 
             Piece target = useBoard.getPieceAt(diag);
             if (target.exists() && target.getColor() != pawn.getColor()) {
+                // First see if this piece results in a check. Not allowed if so
+                if (TargetLogic.inCheckAfterMove(usePawn, diag)) {
+                    continue;
+                }
+
                 validMoves.add(diag);
             }
         }
@@ -168,11 +211,18 @@ public class MoveLogic {
             if (!to.isOnBoard()) break;
 
             if (!useBoard.getPieceAt(to).exists()) {
+                // First see if this piece results in a check. Not allowed if so
+                if (TargetLogic.inCheckAfterMove(usePawn, to)) {
+                    continue;
+                }
+
                 validMoves.add(to);
             } else {
                 break;
             }
-            if (pawn.hasMoved()) break;
+            if (pawn.hasMoved()) {
+                break;
+            }
         }
 
         // Flip back if needed (black)
@@ -197,6 +247,12 @@ public class MoveLogic {
 
 
     // Todo: implement these
+    public boolean canShortCastle(ChessBoard board, Color color) {
+        return true;
+    }
+    public boolean canLongCastle(ChessBoard board, Color color) {
+        return true;
+    }
     public void shortCastle(Piece king, Piece rook) {}
     public void longCastle(Piece king, Piece rook) {}
 }

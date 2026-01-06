@@ -1,0 +1,17 @@
+—Add castling (MoveLogic)
+
+—Make pixel pawns smaller and more rounded
+
+—Add BoardFlipping ability
+        new class DoubleSidedBoard with two same boards but from different pov. Use this when playing
+
+—Fix bug where Pawn cant capture diagonally to save king from check
+        Maybe dont need any Pawnflip logic if we use a double-sided board?
+        Pawn can also move forward when pinned
+        Hypothetically both of these bugs can be solved by using a two-sided board. Will require a LOT of refactoring
+
+—Go through every class and resolve warnings
+
+
+
+

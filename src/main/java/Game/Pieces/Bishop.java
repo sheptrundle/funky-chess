@@ -17,12 +17,14 @@ public class Bishop implements Piece {
     Position position;
     ChessBoard board;
     Color color;
+    boolean hasMoved;
     private ImageView imageView;
 
     public Bishop(Position position, ChessBoard board, Color color) {
         this.position = position;
         this.board = board;
         this.color = color;
+        hasMoved = false;
 
         // Set up the image for specific piece
         ImageFactory imageFactory = new ImageFactory();
@@ -46,6 +48,9 @@ public class Bishop implements Piece {
     public boolean exists() {return true;}
     public PieceType getType() {return PieceType.BISHOP;}
     public Node getNode() {return imageView;}
+    public boolean hasMoved() {return hasMoved;}
+    public void setHasMoved(boolean hasMoved) {this.hasMoved = hasMoved;}
+    public String toString() {return PieceLogic.colorToString(color) + " " + getType() + " @ " + position;}
 
     public List<Position> getValidMoves() {
         MoveLogic moveLogic = new MoveLogic();

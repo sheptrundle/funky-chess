@@ -11,21 +11,25 @@ import javafx.util.Duration;
 public class ChessBoard {
     public Piece[][] board;
     Gallery gallery;
+    Duration time;
     Player whitePlayer;
     Player blackPlayer;
 
-    public ChessBoard() {
-        gallery = Gallery.PIXEL;
+    public ChessBoard(Gallery gallery, Duration time) {
         board = new Piece[8][8];
-        whitePlayer = new Player(Color.WHITE, Duration.minutes(10));
-        blackPlayer = new Player(Color.BLACK, Duration.minutes(10));
+        setLiveFields(gallery, time);
     }
 
     // Returns the gallery of the board
     public Gallery getGallery() {return gallery;}
 
     // Sets the gallery of the board
-    public void setGallery(Gallery gallery) {this.gallery = gallery;}
+    public void setLiveFields(Gallery gallery, Duration time) {
+        this.gallery = gallery;
+        this.time = time;
+        whitePlayer = new Player(Color.WHITE, time);
+        blackPlayer = new Player(Color.BLACK, time);
+    }
 
     // Return piece at a position
     public Piece getPieceAt(Position position) {
@@ -47,7 +51,7 @@ public class ChessBoard {
 
     // Returns a flipped copy of the current board
     public ChessBoard flipped() {
-        ChessBoard flipped = new ChessBoard();
+        ChessBoard flipped = new ChessBoard(gallery, time);
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 flipped.board[row][col] = board[7 - row][col];
@@ -169,43 +173,6 @@ public class ChessBoard {
             setPieceAt(to, piece);
             setPieceAt(from, new NullPiece(from));
         }
-
-        // Recalculate allTargets after each successful move
-
-        /*
-        System.out.println("*SUCCESSFUL MOVE*");
-        System.out.println("Black targets: " + blackPlayer.getAllTargets());
-        System.out.println("White targets: " + whitePlayer.getAllTargets());
-        System.out.println("All black pieces: " + blackPlayer.getTeam().toString());
-        System.out.println("All white pieces: " + whitePlayer.getTeam().toString());
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-         */
-    }
-
-    // Simulates a move, sees if the moving team is in check after it, then restores board
-    // Todo: use this method when determining moves while in check to go through every possible move available and only allow
-    //  player to make said move if this method returns false.
-    public boolean inCheckAfterMove(Piece piece, Position to) {
-        Position from = piece.getPosition();
-        ChessBoard board = piece.getBoard();
-
-        // Save captured piece (even if NullPiece)
-        Piece captured = board.getPieceAt(to);
-
-        // Make hypothetical move
-        board.setPieceAt(from, new NullPiece(from));
-        board.setPieceAt(to, piece);
-        piece.setPosition(to);
-
-        // Check king safety
-        boolean inCheck = board.getKing(piece.getColor()).isInCheck();
-
-        // Rollback
-        piece.setPosition(from);
-        board.setPieceAt(from, piece);
-        board.setPieceAt(to, captured);
-
-        return inCheck;
     }
 
     public void setStartingPlayers() {

@@ -47,27 +47,18 @@ public class King implements Piece {
         return (color == Color.WHITE) ? "white" : "black";
     }
     public Color getOppositeColor() {
-        PieceLogic pieceLogic = new PieceLogic();
-        return pieceLogic.getOppositeColor(color);
+        return PieceLogic.getOppositeColor(color);
     }
     public boolean exists() {return true;}
     public PieceType getType() {return PieceType.KING;}
     public Node getNode() {return imageView;}
+    public boolean hasMoved() {return hasMoved;}
+    public void setHasMoved(boolean hasMoved) {this.hasMoved = hasMoved;}
+    public String toString() {return PieceLogic.colorToString(color) + " " + getType() + " @ " + position;}
 
     public List<Position> getValidMoves() {
-        int[] dx = { 1,  1,  1,  0, 0, -1, -1, -1 };
-        int[] dy = { -1,  0, 1, -1, 1, -1,  0,  1 };
-        List<Position> validMoves = new ArrayList<>();
-
-        MoveLogic moveLogic = new MoveLogic();
-        for (int i = 0; i < 8; i++) {
-            Position newPos = new Position(position.getRow() + dx[i], position.getColumn() + dy[i]);
-            if (moveLogic.isValidMove(this, newPos) && !TargetLogic.isTargeted(board, newPos, color)) {
-                validMoves.add(newPos);
-            }
-        }
-
-        return validMoves;
+       MoveLogic moveLogic = new MoveLogic();
+       return moveLogic.kingMoveset(this);
     }
 
     public boolean targets(Position position) {

@@ -28,7 +28,14 @@
                textFill="white"
                style="-fx-font-size: 20; -fx-font-weight: bold;" />
 
-        <Pane fx:id="spacer" VBox.vgrow="ALWAYS"/>
+        <Pane prefHeight="308"/>
+
+        <Label fx:id="endResultLabel"
+               text="Current Turn = White"
+               textFill="white"
+               style="-fx-font-size: 20; -fx-font-weight: bold;" />
+
+        <Pane VBox.vgrow="ALWAYS"/>
 
         <Label fx:id="whiteClockLabel"
                text="White Time"

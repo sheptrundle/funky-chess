@@ -1,6 +1,7 @@
 package Game.Pieces;
 
 import Game.Features.ChessBoard;
+import Game.Logic.PieceLogic;
 import Game.Logic.TargetLogic;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.Piece;
@@ -34,7 +35,10 @@ public class NullPiece implements Piece {
         invisible.setOpacity(0); // completely invisible
         return invisible;
     }
+    public boolean hasMoved() {throw new IllegalArgumentException("Cannot use hasMoved on piece: " + getType());}
+    public void setHasMoved(boolean hasMoved) {throw new IllegalArgumentException("Cannot use setHasMoved on piece: " + getType());}
     public boolean targets(Position position) {throw new NullPointerException("Cannot get targets of null piece at " + position);}
+    public String toString() {return "NullPiece @ " + position;}
 
 }
 

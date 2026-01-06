@@ -2,6 +2,7 @@ package Game.Live;
 
 import Game.Logic.PieceLogic;
 import Game.Pieces.Assets.Color;
+import Game.Pieces.Assets.PieceType;
 import javafx.util.Duration;
 
 public class LiveGame {
@@ -68,5 +69,17 @@ public class LiveGame {
         return (!whitePlayer.isCheckmated() && !blackPlayer.isCheckmated())
                 && !whitePlayer.getClock().isOutOfTime()
                 && !blackPlayer.getClock().isOutOfTime();
+    }
+
+    public Color getWinner() {
+        if (isLive()) {
+            throw new IllegalArgumentException("Cannot determine winner of a game that is still live");
+        }
+
+        if (whitePlayer.isCheckmated() || whitePlayer.getClock().isOutOfTime()) {
+            return Color.BLACK;
+        } else {
+            return Color.WHITE;
+        }
     }
 }
