@@ -1,4 +1,4 @@
-package Game.Pieces;
+package Game.Pieces.Standard;
 import Game.Features.*;
 import Game.Logic.MoveLogic;
 import Game.Logic.PieceLogic;
@@ -6,20 +6,20 @@ import Game.Logic.TargetLogic;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.Piece;
 import Game.Pieces.Assets.PieceType;
-import UI.ImageFactory;
+import UI.Images.ImageFactory;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
 import java.util.List;
 
-public class Knight implements Piece {
+public class Pawn implements Piece {
     Position position;
     ChessBoard board;
     Color color;
     boolean hasMoved;
     private ImageView imageView;
 
-    public Knight(Position position, ChessBoard board, Color color) {
+    public Pawn(Position position, ChessBoard board, Color color) {
         this.position = position;
         this.board = board;
         this.color = color;
@@ -34,7 +34,10 @@ public class Knight implements Piece {
 
     // Getters and Setters
     public Position getPosition() {return position;}
-    public void setPosition(Position position) {this.position = position;}
+    public void setPosition(Position position) {
+        this.position = position;
+        hasMoved = true;
+    }
     public ChessBoard getBoard() {return board;}
     public Color getColor() {return color;}
     public String getColorAsString() {
@@ -45,16 +48,16 @@ public class Knight implements Piece {
         return pieceLogic.getOppositeColor(color);
     }
     public boolean exists() {return true;}
-    public PieceType getType() {return PieceType.KNIGHT;}
+    public PieceType getType() {return PieceType.PAWN;}
     public Node getNode() {return imageView;}
     public boolean hasMoved() {return hasMoved;}
     public void setHasMoved(boolean hasMoved) {this.hasMoved = hasMoved;}
     public String toString() {return PieceLogic.colorToString(color) + " " + getType() + " @ " + position;}
 
-    // Return a list of all the valid moves from knight at its current position
+
     public List<Position> getValidMoves() {
         MoveLogic moveLogic = new MoveLogic();
-        return moveLogic.knightMoveSet(this);
+        return moveLogic.pawnMoveSet(this);
     }
 
     public boolean targets(Position position) {

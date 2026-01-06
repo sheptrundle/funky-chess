@@ -5,7 +5,7 @@ import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.PieceType;
 import Game.Features.Position;
 import Game.Pieces.Assets.Piece;
-import Game.Pieces.NullPiece;
+import Game.Pieces.Assets.NullPiece;
 
 import java.util.ArrayList;
 import java.util.List;

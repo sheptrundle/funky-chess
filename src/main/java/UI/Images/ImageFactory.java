@@ -1,4 +1,4 @@
-package UI;
+package UI.Images;
 
 import Game.Pieces.Assets.PieceType;
 import Game.Pieces.Assets.Piece;

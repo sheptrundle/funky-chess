@@ -1,4 +1,4 @@
-package Game.Pieces;
+package Game.Pieces.Standard;
 
 import Game.Features.*;
 import Game.Logic.MoveLogic;
@@ -7,20 +7,20 @@ import Game.Logic.TargetLogic;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.Piece;
 import Game.Pieces.Assets.PieceType;
-import UI.ImageFactory;
+import UI.Images.ImageFactory;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
 import java.util.List;
 
-public class Rook implements Piece {
+public class Bishop implements Piece {
     Position position;
     ChessBoard board;
     Color color;
     boolean hasMoved;
     private ImageView imageView;
 
-    public Rook(Position position, ChessBoard board, Color color) {
+    public Bishop(Position position, ChessBoard board, Color color) {
         this.position = position;
         this.board = board;
         this.color = color;
@@ -46,18 +46,19 @@ public class Rook implements Piece {
         return pieceLogic.getOppositeColor(color);
     }
     public boolean exists() {return true;}
-    public PieceType getType() {return PieceType.ROOK;}
+    public PieceType getType() {return PieceType.BISHOP;}
     public Node getNode() {return imageView;}
     public boolean hasMoved() {return hasMoved;}
     public void setHasMoved(boolean hasMoved) {this.hasMoved = hasMoved;}
     public String toString() {return PieceLogic.colorToString(color) + " " + getType() + " @ " + position;}
 
     public List<Position> getValidMoves() {
-       MoveLogic moveLogic = new MoveLogic();
-       return moveLogic.rookMoveset(this);
+        MoveLogic moveLogic = new MoveLogic();
+        return moveLogic.bishopMoveSet(this);
     }
 
     public boolean targets(Position position) {
         return TargetLogic.getTargetsForPiece(this).contains(position);
     }
 }
+

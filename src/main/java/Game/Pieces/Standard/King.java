@@ -1,26 +1,26 @@
-package Game.Pieces;
-
+package Game.Pieces.Standard;
 import Game.Features.*;
+import Game.Live.Player;
 import Game.Logic.MoveLogic;
 import Game.Logic.PieceLogic;
 import Game.Logic.TargetLogic;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.Piece;
 import Game.Pieces.Assets.PieceType;
-import UI.ImageFactory;
+import UI.Images.ImageFactory;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
 import java.util.List;
 
-public class Bishop implements Piece {
+public class King implements Piece {
     Position position;
     ChessBoard board;
     Color color;
     boolean hasMoved;
     private ImageView imageView;
 
-    public Bishop(Position position, ChessBoard board, Color color) {
+    public King(Position position, ChessBoard board, Color color) {
         this.position = position;
         this.board = board;
         this.color = color;
@@ -33,32 +33,46 @@ public class Bishop implements Piece {
         this.imageView.setFitHeight(80);
     }
 
-    // Getters and Setters
+    // Getters and Setter
     public Position getPosition() {return position;}
-    public void setPosition(Position position) {this.position = position;}
+    public void setPosition(Position position) {
+        this.position = position;
+        hasMoved = true;
+    }
     public ChessBoard getBoard() {return board;}
     public Color getColor() {return color;}
     public String getColorAsString() {
         return (color == Color.WHITE) ? "white" : "black";
     }
     public Color getOppositeColor() {
-        PieceLogic pieceLogic = new PieceLogic();
-        return pieceLogic.getOppositeColor(color);
+        return PieceLogic.getOppositeColor(color);
     }
     public boolean exists() {return true;}
-    public PieceType getType() {return PieceType.BISHOP;}
+    public PieceType getType() {return PieceType.KING;}
     public Node getNode() {return imageView;}
     public boolean hasMoved() {return hasMoved;}
     public void setHasMoved(boolean hasMoved) {this.hasMoved = hasMoved;}
     public String toString() {return PieceLogic.colorToString(color) + " " + getType() + " @ " + position;}
 
     public List<Position> getValidMoves() {
-        MoveLogic moveLogic = new MoveLogic();
-        return moveLogic.bishopMoveSet(this);
+       MoveLogic moveLogic = new MoveLogic();
+       return moveLogic.kingMoveset(this);
     }
 
     public boolean targets(Position position) {
         return TargetLogic.getTargetsForPiece(this).contains(position);
     }
-}
 
+    // Return the opposing player on current game
+    public Player getOppositePlayer() {
+        return switch (getColor()) {
+            case WHITE -> board.getPlayer(Color.BLACK);
+            case BLACK -> board.getPlayer(Color.WHITE);
+        };
+    }
+
+    // Return true if king is currently in check
+    public boolean isInCheck() {
+        return TargetLogic.isTargeted(board, position, color);
+    }
+}

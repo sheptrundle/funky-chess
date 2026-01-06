@@ -1,10 +1,11 @@
 package Game.Features;
 import Game.Live.Player;
 import Game.Logic.MoveLogic;
-import Game.Pieces.*;
 import Game.Pieces.Assets.Color;
+import Game.Pieces.Assets.NullPiece;
 import Game.Pieces.Assets.Piece;
-import UI.Gallery;
+import Game.Pieces.Standard.*;
+import UI.Images.Gallery;
 import javafx.util.Duration;
 
 

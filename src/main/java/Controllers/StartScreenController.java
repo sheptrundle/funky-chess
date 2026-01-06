@@ -1,5 +1,5 @@
 package Controllers;
-import UI.Gallery;
+import UI.Images.Gallery;
 import javafx.fxml.FXML;
 
 import javafx.event.ActionEvent;

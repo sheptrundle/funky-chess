@@ -2,7 +2,7 @@ package Game.Logic;
 import Game.Features.*;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.PieceType;
-import Game.Pieces.Pawn;
+import Game.Pieces.Standard.Pawn;
 import Game.Pieces.Assets.Piece;
 
 import java.util.ArrayList;

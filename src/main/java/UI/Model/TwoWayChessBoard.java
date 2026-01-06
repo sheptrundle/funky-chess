@@ -1,4 +1,4 @@
-package UI;
+package UI.Model;
 
 import Game.Features.ChessBoard;
 import Game.Features.Position;
@@ -58,7 +58,7 @@ public class TwoWayChessBoard {
         return board.getPieceAt(boardPos);
     }
 
-
+    // Board movement
     public void movePieceFromUI(Position uiFrom, Position uiTo) {
         Position boardFrom = uiToBoard(uiFrom);
         Position boardTo = uiToBoard(uiTo);

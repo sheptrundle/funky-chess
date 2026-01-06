@@ -3,7 +3,7 @@ package Game.Live;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.Piece;
 import Game.Pieces.Assets.PieceType;
-import Game.Pieces.King;
+import Game.Pieces.Standard.King;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
