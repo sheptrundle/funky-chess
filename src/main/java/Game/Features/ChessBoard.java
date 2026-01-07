@@ -1,12 +1,16 @@
 package Game.Features;
 import Game.Live.Player;
 import Game.Logic.MoveLogic;
+import Game.Logic.TargetLogic;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.NullPiece;
 import Game.Pieces.Assets.Piece;
+import Game.Pieces.Assets.PieceType;
 import Game.Pieces.Standard.*;
 import UI.Images.Gallery;
 import javafx.util.Duration;
+
+import java.lang.annotation.Target;
 
 
 public class ChessBoard {
@@ -55,12 +59,16 @@ public class ChessBoard {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 Piece p = getPieceAt(new Position(r, c));
-                if (p instanceof King && p.getColor() == color) {
+                if (p.getType() == PieceType.KING && p.getColor() == color) {
                     return (King) p;
                 }
             }
         }
         throw new IllegalStateException("King not found for " + color);
+    }
+
+    public boolean isCheckmated(Color color) {
+        return TargetLogic.isCheckmated(this, color);
     }
 
     // Initialize a new piece and place it in a position

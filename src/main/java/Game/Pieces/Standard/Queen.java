@@ -52,9 +52,9 @@ public class Queen implements Piece {
     public void setHasMoved(boolean hasMoved) {this.hasMoved = hasMoved;}
     public String toString() {return PieceLogic.colorToString(color) + " " + getType() + " @ " + position;}
 
-    public List<Position> getValidMoves() {
+    public List<Position> getValidMoves(boolean strictlyLegal) {
         MoveLogic moveLogic = new MoveLogic();
-        return moveLogic.queenMoveset(this);
+        return moveLogic.queenMoveset(this, strictlyLegal);
     }
 
     public boolean targets(Position position) {

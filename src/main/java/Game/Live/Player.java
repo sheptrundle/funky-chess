@@ -53,10 +53,4 @@ public class Player {
         }
         return parts.toString();
     }
-
-    // Return true if player is currently checkmated
-    public boolean isCheckmated() {
-        return getKing().getValidMoves().isEmpty() && getKing().isInCheck();
-    }
-
 }

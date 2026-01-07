@@ -95,7 +95,7 @@ public class BoardRenderer {
         // Clear old highlights first
         clearHighlights(validMoves);
 
-        for (Position boardPos : piece.getValidMoves()) {
+        for (Position boardPos : piece.getValidMoves(true)) {
             Position uiPos = twoWayBoard.boardToUI(boardPos);
 
             validMoves.add(boardPos);

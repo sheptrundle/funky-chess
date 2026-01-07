@@ -26,7 +26,7 @@ public interface Piece {
     public ChessBoard getBoard();
 
     // Returns a set of valid moves from given position
-    public List<Position> getValidMoves();
+    public List<Position> getValidMoves(boolean strictlyLegal);
 
     // Returns true if the piece targets or attacks a given position
     public boolean targets(Position position);

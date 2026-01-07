@@ -52,9 +52,9 @@ public class Knight implements Piece {
     public String toString() {return PieceLogic.colorToString(color) + " " + getType() + " @ " + position;}
 
     // Return a list of all the valid moves from knight at its current position
-    public List<Position> getValidMoves() {
+    public List<Position> getValidMoves(boolean strictlyLegal) {
         MoveLogic moveLogic = new MoveLogic();
-        return moveLogic.knightMoveSet(this);
+        return moveLogic.knightMoveSet(this, strictlyLegal);
     }
 
     public boolean targets(Position position) {

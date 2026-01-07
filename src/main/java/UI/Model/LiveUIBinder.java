@@ -13,7 +13,6 @@ import javafx.util.Duration;
 public class LiveUIBinder {
 
     private final Timeline timeline;
-    private Label endResultLabel;
 
     public LiveUIBinder(LiveGame liveGame, Duration time, Label whiteClock, Label blackClock, Label endResultLabel) {
 
@@ -35,7 +34,8 @@ public class LiveUIBinder {
                         blackClock.setTextFill(Paint.valueOf("RED"));
                     }
 
-                    // Continuously check if game has ended
+                    // Continuously check if time runs out
+                    liveGame.checkTimes();
                     if (!liveGame.isLive()) {
                         liveGame.stopClocks();
                         endResultLabel.setText(

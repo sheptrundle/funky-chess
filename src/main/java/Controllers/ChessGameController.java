@@ -31,11 +31,7 @@ public class ChessGameController {
 
         ChessBoard board = new ChessBoard(gallery, time);
         TwoWayChessBoard twoWayBoard = new TwoWayChessBoard(board, Color.WHITE);
-        LiveGame liveGame = new LiveGame(
-                time,
-                board.getPlayer(Color.WHITE),
-                board.getPlayer(Color.BLACK)
-        );
+        LiveGame liveGame = new LiveGame(board);
 
         boardRenderer = new BoardRenderer(boardGrid, board, twoWayBoard);
         gameCoordinator = new GameCoordinator(board, twoWayBoard, liveGame, boardRenderer, endResultLabel);

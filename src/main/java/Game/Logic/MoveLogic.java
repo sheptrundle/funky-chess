@@ -23,7 +23,7 @@ public class MoveLogic {
     }
 
     // Return all valid moves for a Knight at a given position on a given board
-    public List<Position> knightMoveSet(Piece piece) {
+    public List<Position> knightMoveSet(Piece piece, boolean strictlyLegal) {
         Position position = piece.getPosition();
 
         int[] dx = { 1,  2,  2,  1, -1, -2, -2, -1 };
@@ -35,7 +35,7 @@ public class MoveLogic {
 
             if (isValidMove(piece, newPos)) {
                 // First see if this piece results in a check. Not allowed if so
-                if (TargetLogic.inCheckAfterMove(piece, newPos)) {
+                if (strictlyLegal && TargetLogic.inCheckAfterMove(piece, newPos)) {
                     continue;
                 }
                 validMoves.add(newPos);
@@ -45,7 +45,7 @@ public class MoveLogic {
     }
 
     // Return all valid moves for a Bishop at a given position on a given board
-    public List<Position> bishopMoveSet(Piece piece) {
+    public List<Position> bishopMoveSet(Piece piece, boolean strictlyLegal) {
         Position position = piece.getPosition();
         ChessBoard board = piece.getBoard();
 
@@ -62,7 +62,7 @@ public class MoveLogic {
                 while (moveLogic.isValidMove(piece, new Position(row, col))) {
                     // First see if this piece results in a check. Not allowed if so
                     Position pos = new Position(row, col);
-                    if (TargetLogic.inCheckAfterMove(piece, pos)) {
+                    if (strictlyLegal && TargetLogic.inCheckAfterMove(piece, pos)) {
                         row += y;
                         col += x;
                         continue;
@@ -83,7 +83,7 @@ public class MoveLogic {
     }
 
     // Return all valid moves for a Rook at a given position on a given board
-    public List<Position> rookMoveset(Piece piece) {
+    public List<Position> rookMoveset(Piece piece, boolean strictlyLegal) {
         Position position = piece.getPosition();
         ChessBoard board = piece.getBoard();
 
@@ -98,7 +98,7 @@ public class MoveLogic {
             while (moveLogic.isValidMove(piece, new Position(row, col))) {
                 Position pos = new Position(row, col);
                 // First see if this piece results in a check. Not allowed if so
-                if (TargetLogic.inCheckAfterMove(piece, pos)) {
+                if (strictlyLegal && TargetLogic.inCheckAfterMove(piece, pos)) {
                     col += dx;
                     continue;
                 }
@@ -120,7 +120,7 @@ public class MoveLogic {
             while (moveLogic.isValidMove(piece, new Position(row, col))) {
                 Position pos = new Position(row, col);
                 // See if this piece results in a check. Not allowed if so
-                if (TargetLogic.inCheckAfterMove(piece, pos)) {
+                if (strictlyLegal && TargetLogic.inCheckAfterMove(piece, pos)) {
                     row += dy;
                     continue;
                 }
@@ -137,14 +137,14 @@ public class MoveLogic {
         return validMoves;
     }
 
-    public List<Position> queenMoveset(Piece piece) {
+    public List<Position> queenMoveset(Piece piece, boolean strictlyLegal) {
         List<Position> queenMoves = new ArrayList<>();
-        queenMoves.addAll(rookMoveset(piece));
-        queenMoves.addAll(bishopMoveSet(piece));
+        queenMoves.addAll(rookMoveset(piece, strictlyLegal));
+        queenMoves.addAll(bishopMoveSet(piece, strictlyLegal));
         return queenMoves;
     }
 
-    public List<Position> kingMoveset(Piece piece) {
+    public List<Position> kingMoveset(Piece piece, boolean strictlyLegal) {
         int[] dx = { 1,  1,  1,  0, 0, -1, -1, -1 };
         int[] dy = { -1,  0, 1, -1, 1, -1,  0,  1 };
         List<Position> validMoves = new ArrayList<>();
@@ -155,8 +155,9 @@ public class MoveLogic {
         MoveLogic moveLogic = new MoveLogic();
         for (int i = 0; i < 8; i++) {
             Position newPos = new Position(position.getRow() + dx[i], position.getColumn() + dy[i]);
-            if (moveLogic.isValidMove(piece, newPos) && !TargetLogic.isTargeted(board, newPos, color)) {
-                validMoves.add(newPos);
+            if (moveLogic.isValidMove(piece, newPos)) {
+                if (strictlyLegal && TargetLogic.inCheckAfterMove(piece, newPos)) continue;
+                if (!TargetLogic.isTargeted(board, newPos, color)) validMoves.add(newPos);
             }
         }
 
@@ -164,7 +165,7 @@ public class MoveLogic {
     }
 
     // Return all valid moves for a Pawn at a given position on the real board
-    public List<Position> pawnMoveSet(Pawn pawn) {
+    public List<Position> pawnMoveSet(Pawn pawn, boolean strictlyLegal) {
         Position pos = pawn.getPosition();
         ChessBoard board = pawn.getBoard();
         Color color = pawn.getColor();
@@ -183,25 +184,26 @@ public class MoveLogic {
             Position diag = new Position(row + forward, col + dCol);
             if (!diag.isOnBoard()) continue;
 
-            Piece target = board.getPieceAt(diag);
-            if (target.exists() && target.getColor() != color) {
+            Piece diagonalPiece = board.getPieceAt(diag);
+            if (diagonalPiece.exists() && diagonalPiece.getColor() != color) {
                 // Check if this move leaves king in check
-                if (!TargetLogic.inCheckAfterMove(pawn, diag)) {
-                    validMoves.add(diag);
+                if (strictlyLegal && TargetLogic.inCheckAfterMove(pawn, diag)) {
+                    continue;
                 }
+                validMoves.add(diag);
             }
         }
 
         // Forward moves
         Position oneStep = new Position(row + forward, col);
         if (oneStep.isOnBoard() && !board.getPieceAt(oneStep).exists()) {
-            if (!TargetLogic.inCheckAfterMove(pawn, oneStep)) {
+            if (!(strictlyLegal && TargetLogic.inCheckAfterMove(pawn, oneStep))) {
                 validMoves.add(oneStep);
 
                 // Two-step forward if pawn hasn't moved yet
                 Position twoStep = new Position(row + 2 * forward, col);
                 if (!pawn.hasMoved() && twoStep.isOnBoard() && !board.getPieceAt(twoStep).exists()) {
-                    if (!TargetLogic.inCheckAfterMove(pawn, twoStep)) {
+                    if (!(strictlyLegal && TargetLogic.inCheckAfterMove(pawn, twoStep))) {
                         validMoves.add(twoStep);
                     }
                 }

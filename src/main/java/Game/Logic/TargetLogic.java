@@ -6,6 +6,7 @@ import Game.Pieces.Assets.PieceType;
 import Game.Features.Position;
 import Game.Pieces.Assets.Piece;
 import Game.Pieces.Assets.NullPiece;
+import Game.Pieces.Standard.King;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,6 +148,35 @@ public class TargetLogic {
         System.out.println("after making hypothetical move of " + piece.toString() + " to " + to + ". confirmed that is in check evaluates to " + inCheck);
 
         return inCheck;
+    }
+
+    public static boolean isCheckmated(ChessBoard board, Color color) {
+        King king = board.getKing(color);
+
+        // Condition 1: must currently be in check
+        if (!king.isInCheck()) {
+            return false;
+        }
+
+        // Condition 2: no legal move may resolve the check
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                Piece piece = board.getPieceAt(new Position(r, c));
+
+                // Skip empty squares and enemy pieces
+                if (!piece.exists() || piece.getColor() != color) {
+                    continue;
+                }
+
+                for (Position move : piece.getValidMoves(false)) {
+                    // If any move resolves check then it is not checkmate
+                    if (!TargetLogic.inCheckAfterMove(piece, move)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 

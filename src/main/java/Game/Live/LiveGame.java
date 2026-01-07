@@ -1,5 +1,6 @@
 package Game.Live;
 
+import Game.Features.ChessBoard;
 import Game.Logic.PieceLogic;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.PieceType;
@@ -8,14 +9,18 @@ import javafx.util.Duration;
 public class LiveGame {
     Player whitePlayer;
     Player blackPlayer;
+    ChessBoard board;
     Color currentTurn;
+    boolean isLive;
 
     // Start a live game and begin ticking for white
-    public LiveGame(Duration time, Player whitePlayer, Player blackPlayer) {
-        this.whitePlayer = whitePlayer;
-        this.blackPlayer = blackPlayer;
+    public LiveGame(ChessBoard board) {
+        this.board = board;
+        whitePlayer = board.getPlayer(Color.WHITE);
+        blackPlayer = board.getPlayer(Color.BLACK);
         currentTurn = Color.WHITE;
         whitePlayer.startTicking();
+        isLive = true;
     }
 
     // Returns the current turn as a Color
@@ -65,10 +70,14 @@ public class LiveGame {
     }
 
     // Ensure neither player is checkmated, then ensure both clocks are >0
+    public void checkCheckmates() {
+        isLive = !(board.isCheckmated(Color.WHITE) || board.isCheckmated(Color.BLACK));
+    }
+    public void checkTimes() {
+        isLive = !(whitePlayer.getClock().isOutOfTime() || blackPlayer.getClock().isOutOfTime());
+    }
     public boolean isLive() {
-        return (!whitePlayer.isCheckmated() && !blackPlayer.isCheckmated())
-                && !whitePlayer.getClock().isOutOfTime()
-                && !blackPlayer.getClock().isOutOfTime();
+        return isLive;
     }
 
     public Color getWinner() {
@@ -76,7 +85,7 @@ public class LiveGame {
             throw new IllegalArgumentException("Cannot determine winner of a game that is still live");
         }
 
-        if (whitePlayer.isCheckmated() || whitePlayer.getClock().isOutOfTime()) {
+        if (board.isCheckmated(Color.WHITE) || whitePlayer.getClock().isOutOfTime()) {
             return Color.BLACK;
         } else {
             return Color.WHITE;

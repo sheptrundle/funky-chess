@@ -52,6 +52,9 @@ public class BoardInteractionHandler {
             twoWayBoard.setPOV(liveGame.getCurrentTurn());
             gameCoordinator.updateTurnLabel();
 
+            // See if checkmate after a successful move
+            liveGame.checkCheckmates();
+
         }
 
         // Not a successful move, instead update highlights/UI accordingly
