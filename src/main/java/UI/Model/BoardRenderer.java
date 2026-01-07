@@ -13,7 +13,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Stack;
 
 public class BoardRenderer {
 
@@ -25,6 +28,7 @@ public class BoardRenderer {
     private final Circle[][] highlights = new Circle[8][8];
 
     private Piece highlightedCheck;
+    private Piece highlightedPiece;
 
     public BoardRenderer(GridPane boardGrid, ChessBoard chessBoard, TwoWayChessBoard twoWayBoard) {
         this.boardGrid = boardGrid;
@@ -73,15 +77,44 @@ public class BoardRenderer {
         highlightChecks();
     }
 
-    // Places lime green highlight on a piece
+    public Piece getHighlightedPiece() {
+        return highlightedPiece;
+    }
+
+    // Places colored highlight on a piece and updates memory
     public void highlightPiece(Piece piece, String color) {
+        Position uiPos = twoWayBoard.boardToUI(piece.getPosition());
+        StackPane square = squares[uiPos.getRow()][uiPos.getColumn()];
+        square.setStyle("-fx-background-color: " + color);
+
+        // Update in memory
+        highlightedPiece = piece;
+        System.out.println("Highlighted~ " + piece);
+    }
+
+    // Just places the highlight, no memory involved
+    public void highlightPieceUI(Piece piece, String color) {
         Position uiPos = twoWayBoard.boardToUI(piece.getPosition());
         StackPane square = squares[uiPos.getRow()][uiPos.getColumn()];
         square.setStyle("-fx-background-color: " + color);
     }
 
-    // Removes lime green highlight on a piece
+    // Removes highlight on a piece
     public void unhighlightPiece(Piece piece) {
+        Position uiPos = twoWayBoard.boardToUI(piece.getPosition());
+        int row = uiPos.getRow();
+        int col = uiPos.getColumn();
+        StackPane square = squares[row][col];
+
+        SquareSetter.setSquare(square, row, col);
+
+        // Update in memory as well
+        System.out.println("Unhighlighted~ " + piece);
+        highlightedPiece = null;
+    }
+
+    // Just removes the highlight, no memory involved
+    public void unhighlightPieceUI(Piece piece) {
         Position uiPos = twoWayBoard.boardToUI(piece.getPosition());
         int row = uiPos.getRow();
         int col = uiPos.getColumn();
@@ -113,7 +146,7 @@ public class BoardRenderer {
     public void highlightChecks() {
         // Remove old check highlight if it exists
         if (highlightedCheck != null) {
-            unhighlightPiece(highlightedCheck);
+            unhighlightPieceUI(highlightedCheck);
             highlightedCheck = null;
         }
 
@@ -121,9 +154,9 @@ public class BoardRenderer {
         for (Color color : Color.values()) {
             King king = chessBoard.getKing(color);
             if (king.isInCheck()) {
-                highlightPiece(king, "red");
+                highlightPieceUI(king, "red");
             } else {
-                unhighlightPiece(king);
+                unhighlightPieceUI(king);
             }
         }
     }
@@ -139,6 +172,18 @@ public class BoardRenderer {
             }
         }
         validMoves.clear();
+    }
+
+    // Clear all overlays on entire board
+    public void clearAllOverlays() {
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                // Remove overlays without calling highlight/unhighlight
+                StackPane square = squares[r][c];
+                SquareSetter.setSquare(square, r, c);
+                square.getChildren().remove(highlights[r][c]);
+            }
+        }
     }
 }
 

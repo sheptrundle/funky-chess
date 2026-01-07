@@ -34,7 +34,7 @@ public class ChessGameController {
         LiveGame liveGame = new LiveGame(board);
 
         boardRenderer = new BoardRenderer(boardGrid, board, twoWayBoard);
-        gameCoordinator = new GameCoordinator(board, twoWayBoard, liveGame, boardRenderer, endResultLabel);
+        gameCoordinator = new GameCoordinator(twoWayBoard, liveGame, boardRenderer, endResultLabel);
         interactionHandler = new BoardInteractionHandler(board, twoWayBoard, liveGame, boardRenderer, gameCoordinator);
         liveUIBinder = new LiveUIBinder(liveGame, time, whiteClockLabel, blackClockLabel, endResultLabel);
 
