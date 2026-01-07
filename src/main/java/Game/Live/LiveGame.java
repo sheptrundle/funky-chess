@@ -88,6 +88,7 @@ public class LiveGame {
 
     // Ensure neither player is checkmated, then
     public void checkCheckmates() {
+        System.out.println("Checking checkmates on board");
         boolean wasLive = isLive;
         isLive = !(board.isCheckmated(Color.WHITE) || board.isCheckmated(Color.BLACK));
         if (wasLive && !isLive) {

@@ -1,4 +1,4 @@
-—Add castling (MoveLogic)
+—Fix bug where checked square stays highlighted after block and board flip
 
 —Add stalemate logic,
     Potentially make a new class called CheckLogic to include both this, and checks
@@ -6,6 +6,9 @@
 —Fix bug when highlighting king
     Make sure if King has red check highlight, it stays after green goes away
     This might be a pain...
+    Priority for highlights?
+
+—Add captured pieces on sidebar, and total material +/-
 
 —Make pixel pawns smaller and more rounded
 

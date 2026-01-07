@@ -66,7 +66,6 @@ public class BoardInteractionHandler {
 
             // See if checkmate after a successful move
             liveGame.checkCheckmates();
-
         }
 
         // Not a successful move, instead update highlights/UI accordingly

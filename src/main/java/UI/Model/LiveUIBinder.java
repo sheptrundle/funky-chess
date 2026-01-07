@@ -49,8 +49,7 @@ public class LiveUIBinder {
                         blackClock.setTextFill(Paint.valueOf("RED"));
                     }
 
-                    // Poll for checkmates / time expiration
-                    liveGame.checkCheckmates();
+                    // Poll for time expiration
                     liveGame.checkTimes();
                 })
         );
