@@ -16,7 +16,7 @@ public class CircleBuilder {
                 circle.setFill(Color.rgb(200, 150, 150, 0.6));
                 break;
             case "blue":
-                circle.setFill(Color.rgb(150, 150, 200, 0.6));
+                circle.setFill(Color.rgb(80, 140, 255, 0.6));
                 break;
             default:
                 throw new IllegalArgumentException("Invalid color for making Circle: " + color);

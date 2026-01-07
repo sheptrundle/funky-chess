@@ -2,6 +2,7 @@ package Game.Logic;
 import Game.Features.*;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.PieceType;
+import Game.Pieces.Standard.King;
 import Game.Pieces.Standard.Pawn;
 import Game.Pieces.Assets.Piece;
 
@@ -161,6 +162,9 @@ public class MoveLogic {
             }
         }
 
+        // Add castles
+        validMoves.addAll(SpecialMovesLogic.availableCastles(board, color));
+
         return validMoves;
     }
 
@@ -222,15 +226,4 @@ public class MoveLogic {
         Piece other =  board.getPieceAt(to);
         return (other.exists() && piece.getColor() != other.getColor());
     }
-
-
-    // Todo: implement these
-    public boolean canShortCastle(ChessBoard board, Color color) {
-        return true;
-    }
-    public boolean canLongCastle(ChessBoard board, Color color) {
-        return true;
-    }
-    public void shortCastle(Piece king, Piece rook) {}
-    public void longCastle(Piece king, Piece rook) {}
 }

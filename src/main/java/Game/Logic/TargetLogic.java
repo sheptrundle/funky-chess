@@ -145,8 +145,6 @@ public class TargetLogic {
         // Reset hasMoved field
         piece.setHasMoved(saveHasMoved);
 
-        System.out.println("after making hypothetical move of " + piece.toString() + " to " + to + ". confirmed that is in check evaluates to " + inCheck);
-
         return inCheck;
     }
 

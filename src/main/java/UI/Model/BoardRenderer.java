@@ -89,7 +89,6 @@ public class BoardRenderer {
 
         // Update in memory
         highlightedPiece = piece;
-        System.out.println("Highlighted~ " + piece);
     }
 
     // Just places the highlight, no memory involved
@@ -109,7 +108,6 @@ public class BoardRenderer {
         SquareSetter.setSquare(square, row, col);
 
         // Update in memory as well
-        System.out.println("Unhighlighted~ " + piece);
         highlightedPiece = null;
     }
 

@@ -2,6 +2,8 @@ package Game.Live;
 
 import Game.Features.ChessBoard;
 import Game.Features.Position;
+import Game.Logic.Castle;
+import Game.Logic.SpecialMovesLogic;
 import Game.Pieces.Assets.Piece;
 import Game.Pieces.Assets.NullPiece;
 import UI.Model.BoardRenderer;
@@ -40,8 +42,18 @@ public class BoardInteractionHandler {
         // First IF is a SUCCESSFUL TURN
         if (validMoves.contains(clicked)) {
             renderer.unhighlightPiece(movingPiece);
-            chessBoard.movePiece(movingPiece, clicked);
-            System.out.println("~~~" + movingPiece.getColor() + " " + movingPiece.getType() + " moved to " + movingPiece.getPosition() + "~~~");
+
+            // Check if this move is a castle
+            Castle castleType = SpecialMovesLogic.isCastle(movingPiece, clicked);
+            if (castleType != Castle.NULL) {
+                SpecialMovesLogic.makeCastle(chessBoard, movingPiece, castleType);
+            }
+
+            // Normal move
+            else {
+                chessBoard.movePiece(movingPiece, clicked);
+            }
+
             renderer.clearHighlights(validMoves);
 
             // Update moving piece to no currently selected piece
@@ -49,7 +61,7 @@ public class BoardInteractionHandler {
 
             liveGame.switchTurn();
             // Flip board and update current turn
-            twoWayBoard.setPOV(liveGame.getCurrentTurn());
+            // twoWayBoard.setPOV(liveGame.getCurrentTurn());
             gameCoordinator.updateLabels();
 
             // See if checkmate after a successful move
