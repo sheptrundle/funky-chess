@@ -169,11 +169,13 @@ public class TargetLogic {
                 for (Position move : piece.getValidMoves(false)) {
                     // If any move resolves check then it is not checkmate
                     if (!TargetLogic.inCheckAfterMove(piece, move)) {
+                        System.out.println(king + " is not checkmated because of move: " + piece + " to " + move);
                         return false;
                     }
                 }
             }
         }
+        System.out.println(king + " is checkmated");
         return true;
     }
 

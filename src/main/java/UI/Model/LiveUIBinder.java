@@ -14,9 +14,24 @@ public class LiveUIBinder {
 
     private final Timeline timeline;
 
-    public LiveUIBinder(LiveGame liveGame, Duration time, Label whiteClock, Label blackClock, Label endResultLabel) {
+    public LiveUIBinder(LiveGame liveGame,
+                        Duration time,
+                        Label whiteClock,
+                        Label blackClock,
+                        Label endResultLabel) {
 
-        timeline = new Timeline(
+        timeline = new Timeline();
+
+        // Register reactive listener for game end
+        liveGame.addGameEndListener(() -> {
+            timeline.stop();           // stop the Timeline
+            liveGame.stopClocks();     // stop internal clocks
+            endResultLabel.setText(
+                    "Game Over:\n" + PieceLogic.colorToString(liveGame.getWinner()) + " wins!"
+            );
+        });
+
+        timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(0.1), e -> {
 
                     // Continuously update clocks
@@ -25,25 +40,21 @@ public class LiveUIBinder {
 
                     double redzone = time.toSeconds() / 10;
 
-                    // White clock in the redzone
+                    // White clock in redzone
                     if (liveGame.getTimeLeft(Color.WHITE).toSeconds() <= redzone) {
                         whiteClock.setTextFill(Paint.valueOf("RED"));
                     }
-                    // Black clock in the redzone
+                    // Black clock in redzone
                     if (liveGame.getTimeLeft(Color.BLACK).toSeconds() <= redzone) {
                         blackClock.setTextFill(Paint.valueOf("RED"));
                     }
 
-                    // Continuously check if time runs out
+                    // Poll for checkmates / time expiration
+                    liveGame.checkCheckmates();
                     liveGame.checkTimes();
-                    if (!liveGame.isLive()) {
-                        liveGame.stopClocks();
-                        endResultLabel.setText(
-                                "Game Over:\n" + PieceLogic.colorToString(liveGame.getWinner()) + " wins!"
-                        );
-                    }
                 })
         );
+
         timeline.setCycleCount(Animation.INDEFINITE);
     }
 

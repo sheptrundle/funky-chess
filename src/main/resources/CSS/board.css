@@ -1,0 +1,17 @@
+.square-light {
+    -fx-background-color: #f0d9b5;
+}
+
+.square-dark {
+    -fx-background-color: #b58863;
+}
+
+.square-selected {
+    -fx-background-color: #6fbf73;
+}
+
+.square-check {
+    -fx-background-color: #e74c3c;
+}
+
+

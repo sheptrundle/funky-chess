@@ -43,7 +43,14 @@ public class StartScreenController {
             ChessGameController controller = loader.getController();
             controller.initialize(galleryDropdown.getValue(), Duration.minutes(timeDropdown.getValue()));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
+
+            // Set up CSS and scene
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(
+                    getClass().getResource("/CSS/board.css").toExternalForm()
+            );
+
+            stage.setScene(scene);
             stage.setTitle("Funky Chess");
             stage.show();
         } catch (IOException e) {

@@ -4,7 +4,11 @@ import Game.Features.ChessBoard;
 import Game.Logic.PieceLogic;
 import Game.Pieces.Assets.Color;
 import Game.Pieces.Assets.PieceType;
+import javafx.application.Platform;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LiveGame {
     Player whitePlayer;
@@ -21,6 +25,19 @@ public class LiveGame {
         currentTurn = Color.WHITE;
         whitePlayer.startTicking();
         isLive = true;
+    }
+
+    // Listeners for end-of-game events
+    private final List<Runnable> gameEndListeners = new ArrayList<>();
+
+    public void addGameEndListener(Runnable listener) {
+        gameEndListeners.add(listener);
+    }
+
+    private void triggerGameEnd() {
+        for (Runnable listener : gameEndListeners) {
+            Platform.runLater(listener);
+        }
     }
 
     // Returns the current turn as a Color
@@ -69,12 +86,21 @@ public class LiveGame {
         }
     }
 
-    // Ensure neither player is checkmated, then ensure both clocks are >0
+    // Ensure neither player is checkmated, then
     public void checkCheckmates() {
+        boolean wasLive = isLive;
         isLive = !(board.isCheckmated(Color.WHITE) || board.isCheckmated(Color.BLACK));
+        if (wasLive && !isLive) {
+            triggerGameEnd();
+        }
     }
+    // Ensure both clocks are >0
     public void checkTimes() {
-        isLive = !(whitePlayer.getClock().isOutOfTime() || blackPlayer.getClock().isOutOfTime());
+        // update whiteTimeLeft and blackTimeLeft
+        if (whitePlayer.getClock().getTimeLeft().toSeconds() <= 0 || blackPlayer.getClock().getTimeLeft().toSeconds() <= 0) {
+            isLive = false;
+            triggerGameEnd();
+        }
     }
     public boolean isLive() {
         return isLive;

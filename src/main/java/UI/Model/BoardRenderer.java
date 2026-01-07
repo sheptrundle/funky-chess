@@ -7,6 +7,7 @@ import Game.Pieces.Assets.Color;
 import Game.Pieces.Standard.King;
 import Game.Pieces.Assets.Piece;
 import UI.Helpers.SquareSetter;
+import UI.Helpers.SquareState;
 import UI.Images.CircleBuilder;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -48,7 +49,11 @@ public class BoardRenderer {
                 StackPane square = new StackPane();
                 square.setPrefSize(100, 100);
 
-                SquareSetter.setSquare(square, r, c);
+                // Apply BASE color only
+                SquareSetter.applyBaseColor(square, r, c, Color.WHITE);
+
+                // Ensure no overlay state at creation
+                SquareSetter.applyState(square, SquareState.NORMAL);
 
                 squares[row][col] = square;
                 square.setOnMouseClicked(e -> handler.handleClick(r, c));
@@ -85,7 +90,7 @@ public class BoardRenderer {
     public void highlightPiece(Piece piece, String color) {
         Position uiPos = twoWayBoard.boardToUI(piece.getPosition());
         StackPane square = squares[uiPos.getRow()][uiPos.getColumn()];
-        square.setStyle("-fx-background-color: " + color);
+        SquareSetter.applyState(square, SquareState.SELECTED);
 
         // Update in memory
         highlightedPiece = piece;
@@ -95,17 +100,14 @@ public class BoardRenderer {
     public void highlightPieceUI(Piece piece, String color) {
         Position uiPos = twoWayBoard.boardToUI(piece.getPosition());
         StackPane square = squares[uiPos.getRow()][uiPos.getColumn()];
-        square.setStyle("-fx-background-color: " + color);
+        SquareSetter.applyState(square, SquareState.SELECTED);
     }
 
     // Removes highlight on a piece
     public void unhighlightPiece(Piece piece) {
         Position uiPos = twoWayBoard.boardToUI(piece.getPosition());
-        int row = uiPos.getRow();
-        int col = uiPos.getColumn();
-        StackPane square = squares[row][col];
-
-        SquareSetter.setSquare(square, row, col);
+        StackPane square = squares[uiPos.getRow()][uiPos.getColumn()];
+        SquareSetter.applyState(square, SquareState.NORMAL);
 
         // Update in memory as well
         highlightedPiece = null;
@@ -114,11 +116,8 @@ public class BoardRenderer {
     // Just removes the highlight, no memory involved
     public void unhighlightPieceUI(Piece piece) {
         Position uiPos = twoWayBoard.boardToUI(piece.getPosition());
-        int row = uiPos.getRow();
-        int col = uiPos.getColumn();
-        StackPane square = squares[row][col];
-
-        SquareSetter.setSquare(square, row, col);
+        StackPane square = squares[uiPos.getRow()][uiPos.getColumn()];
+        SquareSetter.applyState(square, SquareState.NORMAL);
     }
 
     // Highlight all valid moves for a piece
@@ -142,22 +141,29 @@ public class BoardRenderer {
 
     // Highlight a king piece if and only if it is in check
     public void highlightChecks() {
-        // Remove old check highlight if it exists
+
+        // Clear previous check highlight
         if (highlightedCheck != null) {
-            unhighlightPieceUI(highlightedCheck);
+            Position uiPos = twoWayBoard.boardToUI(highlightedCheck.getPosition());
+            StackPane square = squares[uiPos.getRow()][uiPos.getColumn()];
+            SquareSetter.applyState(square, SquareState.NORMAL);
             highlightedCheck = null;
         }
 
         // Check both kings
         for (Color color : Color.values()) {
             King king = chessBoard.getKing(color);
+
+            Position uiPos = twoWayBoard.boardToUI(king.getPosition());
+            StackPane square = squares[uiPos.getRow()][uiPos.getColumn()];
+
             if (king.isInCheck()) {
-                highlightPieceUI(king, "red");
-            } else {
-                unhighlightPieceUI(king);
+                SquareSetter.applyState(square, SquareState.CHECK);
+                highlightedCheck = king;
             }
         }
     }
+
 
     // Clear current highlights for validMoves
     public void clearHighlights(HashSet<Position> validMoves) {
@@ -178,7 +184,7 @@ public class BoardRenderer {
             for (int c = 0; c < 8; c++) {
                 // Remove overlays without calling highlight/unhighlight
                 StackPane square = squares[r][c];
-                SquareSetter.setSquare(square, r, c);
+                SquareSetter.applyState(square, SquareState.NORMAL);
                 square.getChildren().remove(highlights[r][c]);
             }
         }
